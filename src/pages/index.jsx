@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Head from "next/head";
-import Link from "next/link";
 import clsx from "clsx";
 
 import { Button } from "@/components/Button";
@@ -21,6 +20,7 @@ import { generateRssFeed } from "@/lib/generateRssFeed";
 import { getAllArticles } from "@/lib/getAllArticles";
 import { formatDate } from "@/lib/formatDate";
 import client from "@/lib/client";
+import { LINKS } from "@/lib/constants";
 
 function MailIcon(props) {
 	return (
@@ -98,9 +98,9 @@ function Article({ article }) {
 
 function SocialLink({ icon: Icon, ...props }) {
 	return (
-		<Link className="group -m-1 p-1" {...props}>
+		<a className="group -m-1 p-1" {...props}>
 			<Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300" />
-		</Link>
+		</a>
 	);
 }
 
@@ -245,22 +245,26 @@ export default function Home({ articles, positions }) {
 					</p>
 					<div className="mt-6 flex gap-6">
 						<SocialLink
-							href="https://twitter.com"
+							target="_blank"
+							href={LINKS.TWITTER}
 							aria-label="Follow on Twitter"
 							icon={TwitterIcon}
 						/>
 						<SocialLink
-							href="https://instagram.com"
+							target="_blank"
+							href={LINKS.INSTAGRAM}
 							aria-label="Follow on Instagram"
 							icon={InstagramIcon}
 						/>
 						<SocialLink
-							href="https://github.com"
+							target="_blank"
+							href={LINKS.GITHUB}
 							aria-label="Follow on GitHub"
 							icon={GitHubIcon}
 						/>
 						<SocialLink
-							href="https://linkedin.com"
+							target="_blank"
+							href={LINKS.LINKEDIN}
 							aria-label="Follow on LinkedIn"
 							icon={LinkedInIcon}
 						/>
