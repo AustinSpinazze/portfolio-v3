@@ -52,12 +52,9 @@ function TechnologyGrid({ array, filter }) {
 					return (
 						<li key={item.name} className="relative">
 							<div className="group pointer-events-auto cursor-pointer">
-								<div className="group-hover:block mx-auto max-w-[228px] px-4 py-4 bg-white dark:bg-zinc-800 outline-zinc-200  outline outline-1 rounded hidden absolute mb-4 top-[-145px]">
-									<p className="text-sm font-semibold leading-none">
+								<div className="group-hover:block mx-auto max-w-[228px] px-4 py-4 bg-white dark:bg-zinc-800 outline-zinc-200  outline outline-1 rounded hidden absolute mb-4 bottom-10">
+									<p className="text-sm font-semibold leading-none dark:text-white">
 										{item.name}
-									</p>
-									<p className="text-xs leading-none pt-2 pb-2">
-										{item.description}
 									</p>
 									<svg
 										className="absolute z-10  bottom-[-10px] "
@@ -89,6 +86,54 @@ function TechnologyGrid({ array, filter }) {
 	);
 }
 
+function Positions({ positions }) {
+	return (
+		<div className="flow-root">
+			<ul role="list" className="-mb-8">
+				{positions.map((position, index) => (
+					<li key={position.company}>
+						<div className="relative pb-8">
+							{index !== positions.length - 1 ? (
+								<span
+									className="absolute top-4 left-5 -ml-px h-full w-0.5 bg-gray-200"
+									aria-hidden="true"
+								/>
+							) : null}
+							<div className="relative flex justify-between">
+								<div>
+									<span className='flex h-10 w-10 flex-none items-center bg-white justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0'>
+										<img
+											src={position.companyLogoUrl}
+											alt={position.company}
+											className="h-7 w-7"
+										/>
+									</span>
+								</div>
+								<div className="min-w-0 space-x-4 pt-1.5">
+									<p className="whitespace-nowrap3 text-sm text-gray-500">
+										{position.start} - {position.end}
+									</p>
+								</div>
+							</div>
+							<div>
+								<ul className="list-disc px-16">
+									{position.responsibilities.map((responsibility, index) => (
+										<li key={index}>
+											<p className="text-sm text-black dark:text-zinc-300">
+												{responsibility}
+											</p>
+										</li>
+									))}
+								</ul>
+							</div>
+						</div>
+					</li>
+				))}
+			</ul>
+		</div>
+	);
+}
+
 export default function About({ about, technologies, positions }) {
 	return (
 		<>
@@ -116,11 +161,10 @@ export default function About({ about, technologies, positions }) {
 							Hi there, I’m Austin.
 						</h1>
 						<div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
-							{about.map((item) => {
-								if (item.index < 4) {
-									return <p key={item.index}>{item.text}</p>;
-								}
-							})}
+							<p>{about[0].text}</p>
+							<p>{about[1].text}</p>
+							<Positions positions={positions} />
+							<p>{about[2].text}</p>
 							<div>
 								<h3 className="text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100 mb-4">
 									Languages
@@ -205,6 +249,7 @@ export async function getStaticProps() {
 		index,
   	company,
   	title,
+		responsibilities,
   	companyLogo,
   	"companyLogoUrl": companyLogo.asset->url,
   	companyWebsite,

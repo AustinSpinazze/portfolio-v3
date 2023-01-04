@@ -299,5 +299,10 @@ module.exports = {
         },
       },
     }),
+    extend: {
+      display: {
+        inherit: 'inherit',
+      }
+    }
   },
 }

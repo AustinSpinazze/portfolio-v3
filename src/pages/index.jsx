@@ -143,12 +143,12 @@ function Resume({ positions }) {
 			<ol className="mt-6 space-y-4">
 				{positions.map((position) => (
 					<li key={position.index} className="flex gap-4">
-						<div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-800 dark:ring-0">
+						<div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:bg-white dark:border-zinc-700/50dark:ring-0">
 							<Image
 								src={position.companyLogoUrl}
 								width={40}
 								height={40}
-								alt=""
+								alt={position.company}
 								className="h-7 w-7"
 								unoptimized
 							/>
@@ -165,7 +165,7 @@ function Resume({ positions }) {
 							<dt className="sr-only">Date</dt>
 							<dd
 								className="ml-auto text-xs text-zinc-400 dark:text-zinc-500"
-								aria-label={`${position.start} until ${position.end}`}
+								aria-label={`${position.start} - ${position.end}`}
 							>
 								{/* <time dateTime={role.start.dateTime ?? role.start}>
 									{role.start.label ?? role.start}
@@ -179,7 +179,12 @@ function Resume({ positions }) {
 					</li>
 				))}
 			</ol>
-			<Button href="#" variant="secondary" className="group mt-6 w-full">
+			<Button
+				href="/assets/AustinSpinazzeResume.pdf"
+				download={true}
+				variant="secondary"
+				className="group mt-6 w-full"
+			>
 				Download CV
 				<ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
 			</Button>
