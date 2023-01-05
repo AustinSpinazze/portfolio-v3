@@ -146,11 +146,10 @@ function Resume({ positions }) {
 						<div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:bg-white dark:border-zinc-700/50dark:ring-0">
 							<Image
 								src={position.companyLogoUrl}
-								width={40}
-								height={40}
 								alt={position.company}
+								height={40}
+								width={40}
 								className="h-7 w-7"
-								unoptimized
 							/>
 						</div>
 						<dl className="flex flex-auto flex-wrap gap-x-2">
@@ -234,7 +233,7 @@ export default function Home({ articles, positions }) {
 				</title>
 				<meta
 					name="description"
-					content="I'm Austin, a Software Engineer and Entrepreneur based in Lafayette, Louisiana. I'm the founder and CEO of Uncharted Labs, where we develop technologies that empower regular people and small businesses to expand in the digital economy."
+					content="I&apos;m Austin, a Software Engineer and Entrepreneur based in Lafayette, Louisiana. I'm the founder and CEO of Uncharted Labs, where we develop technologies that empower regular people and small businesses to expand in the digital economy."
 				/>
 			</Head>
 			<Container className="mt-9">
@@ -243,10 +242,10 @@ export default function Home({ articles, positions }) {
 						Software Engineer, Consultant, and Entrepreneur.
 					</h1>
 					<p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-						I'm Austin, a Software Engineer and Entrepreneur based in Lafayette,
-						Louisiana. I'm the founder and CEO of Uncharted Labs, where we
-						develop technologies that empower regular people and small
-						businesses to expand their footprint in the digital economy.
+						I&apos;m Austin, a Software Engineer and Entrepreneur based in
+						Lafayette, Louisiana. I&apos;m the founder and CEO of Uncharted
+						Labs, where we develop technologies that empower regular people and
+						small businesses to expand their footprint in the digital economy.
 					</p>
 					<div className="mt-6 flex gap-6">
 						<SocialLink

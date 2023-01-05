@@ -71,9 +71,11 @@ function TechnologyGrid({ array, filter }) {
 									</svg>
 								</div>
 								<div className="block mx-auto overflow-hidden rounded-lg">
-									<img
+									<Image
 										src={item.logoUrl}
 										alt={item.name}
+										width={40}
+										height={40}
 										className="pointer-events-none object-contain h-10 max-w-16"
 									/>
 								</div>
@@ -102,9 +104,11 @@ function Positions({ positions }) {
 							<div className="relative flex justify-between">
 								<div>
 									<span className='flex h-10 w-10 flex-none items-center bg-white justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0'>
-										<img
+										<Image
 											src={position.companyLogoUrl}
 											alt={position.company}
+											width={40}
+											height={40}
 											className="h-7 w-7"
 										/>
 									</span>

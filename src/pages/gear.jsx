@@ -27,7 +27,6 @@ function Tool({ title, href, children }) {
 }
 
 export default function Gear({ gear }) {
-	console.log(gear);
 	return (
 		<>
 			<Head>
