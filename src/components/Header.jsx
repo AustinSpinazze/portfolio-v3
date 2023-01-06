@@ -125,12 +125,12 @@ function MobileNavigation(props) {
 							<ul className="-my-2 divide-y divide-zinc-100 text-base text-zinc-800 dark:divide-zinc-100/5 dark:text-zinc-300">
 								<MobileNavItem href="/">Home</MobileNavItem>
 								<MobileNavItem href="/about">About</MobileNavItem>
-								<MobileNavItem href="/articles">Articles</MobileNavItem>
+								<MobileNavItem href="/posts">Blog</MobileNavItem>
 								<MobileNavItem href="/projects">Projects</MobileNavItem>
 								<MobileNavItem href="/gear">Gear</MobileNavItem>
 							</ul>
 						</nav>
-						<div className="mt-4 w-full flex justify-center">
+						<div className="mt-4 flex w-full justify-center">
 							<ModeToggle />
 						</div>
 					</Popover.Panel>
@@ -169,7 +169,7 @@ function DesktopNavigation(props) {
 			<ul className="flex rounded-full bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10">
 				<NavItem href="/">Home</NavItem>
 				<NavItem href="/about">About</NavItem>
-				<NavItem href="/articles">Articles</NavItem>
+				<NavItem href="/posts">Blog</NavItem>
 				<NavItem href="/projects">Projects</NavItem>
 				<NavItem href="/gear">Gear</NavItem>
 			</ul>
@@ -204,7 +204,7 @@ function ModeToggle() {
 			<span
 				className={clsx(
 					`${style.switch}`,
-					"relative pointer-events-auto mx-auto",
+					"pointer-events-auto relative mx-auto",
 				)}
 			>
 				<input
@@ -215,10 +215,10 @@ function ModeToggle() {
 				/>
 				<label
 					htmlFor="dark-mode-switch"
-					className="bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 after:bg-zinc-300"
+					className="bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur after:bg-zinc-300 dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10"
 				/>
-				<SunIcon className="absolute top-[3px] right-[30px] dark:hidden block h-6 w-6 fill-zinc-100 stroke-zinc-500 transition group-hover:fill-zinc-200 group-hover:stroke-zinc-700  [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:stroke-teal-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-teal-600" />
-				<MoonIcon className="absolute top-[2px] left-[10px] hidden h-6 w-6 fill-zinc-700 stroke-zinc-500 transition ml-6 dark:block [@media(prefers-color-scheme:dark)]:group-hover:stroke-zinc-400 [@media_not_(prefers-color-scheme:dark)]:fill-teal-400/10 [@media_not_(prefers-color-scheme:dark)]:stroke-teal-500" />
+				<SunIcon className="absolute top-[3px] left-[32px] block h-6 w-6 fill-zinc-100 stroke-zinc-500 transition group-hover:fill-zinc-200 group-hover:stroke-zinc-700 dark:hidden  [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:stroke-teal-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-teal-600" />
+				<MoonIcon className="absolute top-[2px] right-[32px] ml-6 hidden h-6 w-6 fill-zinc-700 stroke-zinc-500 transition dark:block [@media(prefers-color-scheme:dark)]:group-hover:stroke-zinc-400 [@media_not_(prefers-color-scheme:dark)]:fill-teal-400/10 [@media_not_(prefers-color-scheme:dark)]:stroke-teal-500" />
 			</span>
 		</>
 	);
@@ -417,7 +417,7 @@ export function Header() {
 						className="top-[var(--header-top,theme(spacing.6))] w-full"
 						style={{ position: "var(--header-inner-position)" }}
 					>
-						<div className="relative flex gap-4 items-center">
+						<div className="relative flex items-center gap-4">
 							<div className="flex flex-1">
 								{!isHomePage && (
 									<AvatarContainer>
@@ -429,7 +429,7 @@ export function Header() {
 								<MobileNavigation className="pointer-events-auto md:hidden" />
 								<DesktopNavigation className="pointer-events-auto hidden md:block" />
 							</div>
-							<div className="hidden md:flex justify-end md:flex-1 items-center">
+							<div className="hidden items-center justify-end md:flex md:flex-1">
 								<ModeToggle />
 							</div>
 						</div>

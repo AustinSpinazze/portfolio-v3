@@ -11,13 +11,12 @@ import {
 	GitHubIcon,
 	LinkedInIcon,
 } from "@/components/SocialIcons";
-import image1 from "@/images/photos/image-1.jpg";
-import image2 from "@/images/photos/image-2.jpg";
-import image3 from "@/images/photos/image-3.jpg";
-import image4 from "@/images/photos/image-4.jpg";
-import image5 from "@/images/photos/image-5.jpg";
-import { generateRssFeed } from "@/lib/generateRssFeed";
-import { getAllArticles } from "@/lib/getAllArticles";
+import image1 from "@/images/photos/image-1.png";
+import image2 from "@/images/photos/image-2.png";
+import image3 from "@/images/photos/image-3.png";
+import image4 from "@/images/photos/image-4.png";
+import image5 from "@/images/photos/image-5.png";
+// import { generateRssFeed } from '@/lib/generateRssFeed'
 import { formatDate } from "@/lib/formatDate";
 import client from "@/lib/client";
 import { LINKS } from "@/lib/constants";
@@ -81,17 +80,15 @@ function ArrowDownIcon(props) {
 	);
 }
 
-function Article({ article }) {
+function BlogPost({ post }) {
 	return (
 		<Card as="article">
-			<Card.Title href={`/articles/${article.slug}`}>
-				{article.title}
-			</Card.Title>
-			<Card.Eyebrow as="time" dateTime={article.date} decorate>
-				{formatDate(article.date)}
+			<Card.Title href={`/posts/${post.slug.current}`}>{post.title}</Card.Title>
+			<Card.Eyebrow as="time" dateTime={post.publishedAt} decorate>
+				{formatDate(post.publishedAt)}
 			</Card.Eyebrow>
-			<Card.Description>{article.description}</Card.Description>
-			<Card.Cta>Read article</Card.Cta>
+			<Card.Description>{post.description}</Card.Description>
+			<Card.Cta>Read post</Card.Cta>
 		</Card>
 	);
 }
@@ -143,7 +140,7 @@ function Resume({ positions }) {
 			<ol className="mt-6 space-y-4">
 				{positions.map((position) => (
 					<li key={position.index} className="flex gap-4">
-						<div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:bg-white dark:border-zinc-700/50dark:ring-0">
+						<div className="dark:border-zinc-700/50dark:ring-0 relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:bg-white">
 							<Image
 								src={position.companyLogoUrl}
 								alt={position.company}
@@ -224,28 +221,25 @@ function Photos() {
 	);
 }
 
-export default function Home({ articles, positions }) {
+export default function Home({ positions, posts }) {
 	return (
 		<>
 			<Head>
 				<title>
-					Austin Spinazze - Software Engineer, Consultant, and Entrepreneur
+					Austin Spinazze - Software Engineer, Consultant, and Freelancer
 				</title>
 				<meta
 					name="description"
-					content="I&apos;m Austin, a Software Engineer and Entrepreneur based in Lafayette, Louisiana. I'm the founder and CEO of Uncharted Labs, where we develop technologies that empower regular people and small businesses to expand in the digital economy."
+					content={`I'm Austin, a Software Engineer and Consultant specializing in building exceptional digital experiences based in Lafayette, Louisiana. Currently, I'm focused on building accessible, human-centered products at ${positions[0].company}.`}
 				/>
 			</Head>
 			<Container className="mt-9">
 				<div className="max-w-2xl">
 					<h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-						Software Engineer, Consultant, and Entrepreneur.
+						Software Engineer, Consultant, and Freelancer.
 					</h1>
 					<p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-						I&apos;m Austin, a Software Engineer and Entrepreneur based in
-						Lafayette, Louisiana. I&apos;m the founder and CEO of Uncharted
-						Labs, where we develop technologies that empower regular people and
-						small businesses to expand their footprint in the digital economy.
+						{`I'm Austin, a Software Engineer and Consultant specializing in building exceptional digital experiences based in Lafayette, Louisiana. Currently, I'm focused on building accessible, human-centered products at ${positions[0].company}.`}
 					</p>
 					<div className="mt-6 flex gap-6">
 						<SocialLink
@@ -279,8 +273,8 @@ export default function Home({ articles, positions }) {
 			<Container className="mt-24 md:mt-28">
 				<div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
 					<div className="flex flex-col gap-16">
-						{articles.map((article) => (
-							<Article key={article.slug} article={article} />
+						{posts.map((post) => (
+							<BlogPost key={post.slug} post={post} />
 						))}
 					</div>
 					<div className="space-y-10 lg:pl-16 xl:pl-24">
@@ -294,28 +288,37 @@ export default function Home({ articles, positions }) {
 }
 
 export async function getStaticProps() {
-	if (process.env.NODE_ENV === "production") {
-		await generateRssFeed();
-	}
+	// if (process.env.NODE_ENV === 'production') {
+	//   await generateRssFeed()
+	// }
 
-	const positions = await client.fetch(`*[_type == "position"] | order(index asc){
-  index,
-  company,
-  title,
-  companyLogo,
-  "companyLogoUrl": companyLogo.asset->url,
-  companyWebsite,
-  start,
-  end
-}
-`);
+	const data = await client.fetch(`*[_type == "position"] | order(index asc) {
+		index,
+  	company,
+  	title,
+		responsibilities,
+  	companyLogo,
+  	"companyLogoUrl": companyLogo.asset->url,
+  	companyWebsite,
+  	start,
+  	end
+	} + *[_type == "post"] | order(publishedAt asc) [0...4] {
+    title,
+    publishedAt,
+    slug,
+    summary,
+		author,
+		tags,
+	}
+	`);
+
+	const positions = data.filter((doc) => doc.hasOwnProperty("company"));
+	const posts = data.filter((doc) => doc.hasOwnProperty("author"));
 
 	return {
 		props: {
-			articles: (await getAllArticles())
-				.slice(0, 4)
-				.map(({ component, ...meta }) => meta),
 			positions,
+			posts,
 		},
 	};
 }

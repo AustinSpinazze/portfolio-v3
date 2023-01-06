@@ -263,12 +263,12 @@ export async function getStaticProps() {
 }
 `);
 
-	const about = data.filter((item) => item.hasOwnProperty("text") === true);
+	const about = data.filter((doc) => doc.hasOwnProperty("text") === true);
 	const technologies = data.filter(
-		(item) => item.hasOwnProperty("type") === true,
+		(doc) => doc.hasOwnProperty("type") === true,
 	);
 	const positions = data.filter(
-		(item) => item.hasOwnProperty("company") === true,
+		(doc) => doc.hasOwnProperty("company") === true,
 	);
 
 	return {
