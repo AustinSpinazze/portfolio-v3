@@ -1,5 +1,5 @@
 import { Feed } from "feed";
-import { writeFile } from "fs/promises";
+import { writeFile, mkdir } from "fs/promises";
 import ReactDOMServer from "react-dom/server";
 
 export async function generateRssFeed(feedData) {
