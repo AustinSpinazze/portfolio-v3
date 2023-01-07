@@ -19,6 +19,8 @@ import image5 from "@/images/photos/image-5.png";
 import { formatDate } from "@/lib/formatDate";
 import client from "@/lib/client";
 import { LINKS } from "@/lib/constants";
+import { fetchFeedData } from "@/lib/fetchRssFeedData";
+import { generateRssFeed } from "@/lib/generateRssFeed";
 
 function MailIcon(props) {
 	return (
@@ -287,9 +289,10 @@ export default function Home({ positions, posts }) {
 }
 
 export async function getStaticProps() {
-	// if (process.env.NODE_ENV === 'production') {
-	//   await generateRssFeed()
-	// }
+	if (process.env.NODE_ENV === "production") {
+		const feedData = await fetchFeedData();
+		await generateRssFeed(feedData);
+	}
 
 	const data = await client.fetch(`*[_type == "position"] | order(index asc) {
 		index,

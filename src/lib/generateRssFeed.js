@@ -1,26 +1,28 @@
-import ReactDOMServer from "react-dom/server";
 import { Feed } from "feed";
-
-function RssItem({ title, url, description, author, publishedAt }) {
-  return (
-    <item>
-      <title>{title}</title>
-      <link href={url} />
-      <description>{description}</description>
-      <author>{author}</author>
-      <pubDate>{publishedAt}</pubDate>
-    </item>
-  );
-}
+import { writeFile } from "fs/promises";
+import ReactDOMServer from "react-dom/server";
 
 export async function generateRssFeed(feedData) {
-  let siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  let author = {
+  function RssItem({ title, url, description, author, publishedAt }) {
+    return (
+      <item>
+        <title>{title}</title>
+        <link href={url} />
+        <description>{description}</description>
+        <author>{author}</author>
+        <pubDate>{publishedAt}</pubDate>
+      </item>
+    );
+  }
+
+  // Generate the RSS feed
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  const author = {
     name: "Austin Spinazze",
     email: "austin.spinazze@austinspinazze.dev",
   };
 
-  let feed = new Feed({
+  const feed = new Feed({
     title: author.name,
     description: "All of my long-form thoughts on programming, product development, personal growth, and more, collected in chronological order.",
     author,
@@ -53,8 +55,9 @@ export async function generateRssFeed(feedData) {
     });
   });
 
-  const xml = feed.rss2();
-  const json = feed.json1();
-
-  return { xml, json };
+  await mkdir("./public/rss", { recursive: true });
+  await Promise.all([
+    writeFile("./public/rss/feed.xml", feed.rss2(), "utf8"),
+    writeFile("./public/rss/feed.json", feed.json1(), "utf8"),
+  ]);
 }
