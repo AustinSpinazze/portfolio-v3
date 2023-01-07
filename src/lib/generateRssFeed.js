@@ -1,17 +1,28 @@
-import ReactDOMServer from 'react-dom/server'
-import { Feed } from 'feed'
-import { mkdir, writeFile } from 'fs/promises'
+import ReactDOMServer from "react-dom/server";
+import { Feed } from "feed";
 
-export async function generateRssFeed() {
-  let siteUrl = process.env.NEXT_PUBLIC_SITE_URL
+function RssItem({ title, url, description, author, publishedAt }) {
+  return (
+    <item>
+      <title>{title}</title>
+      <link href={url} />
+      <description>{description}</description>
+      <author>{author}</author>
+      <pubDate>{publishedAt}</pubDate>
+    </item>
+  );
+}
+
+export async function generateRssFeed(feedData) {
+  let siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   let author = {
-    name: 'Austin Spinazze',
-    email: 'austin.spinazze@austinspinazze.dev',
-  }
+    name: "Austin Spinazze",
+    email: "austin.spinazze@austinspinazze.dev",
+  };
 
   let feed = new Feed({
     title: author.name,
-    description: 'Your blog description',
+    description: "All of my long-form thoughts on programming, product development, personal growth, and more, collected in chronological order.",
     author,
     id: siteUrl,
     link: siteUrl,
@@ -22,29 +33,28 @@ export async function generateRssFeed() {
       rss2: `${siteUrl}/rss/feed.xml`,
       json: `${siteUrl}/rss/feed.json`,
     },
-  })
+  });
 
-  for (let article of articles) {
-    let url = `${siteUrl}/articles/${article.slug}`
+  feedData.forEach((post) => {
+    let url = `${siteUrl}/posts/${post.slug.current}`;
     let html = ReactDOMServer.renderToStaticMarkup(
-      <article.component isRssFeed />
-    )
+      <RssItem title={post.title} url={url} description={post.summary} author={author.name} publishedAt={post.publishedAt} />,
+    );
 
     feed.addItem({
-      title: article.title,
+      title: post.title,
       id: url,
       link: url,
-      description: article.description,
+      description: post.description,
       content: html,
-      author: [author],
-      contributor: [author],
-      date: new Date(article.date),
-    })
-  }
+      author: [{ name: post.author, email: author.email }],
+      contributor: [{ name: post.author, email: author.email }],
+      date: new Date(post.publishedAt),
+    });
+  });
 
-  await mkdir('./public/rss', { recursive: true })
-  await Promise.all([
-    writeFile('./public/rss/feed.xml', feed.rss2(), 'utf8'),
-    writeFile('./public/rss/feed.json', feed.json1(), 'utf8'),
-  ])
+  const xml = feed.rss2();
+  const json = feed.json1();
+
+  return { xml, json };
 }
