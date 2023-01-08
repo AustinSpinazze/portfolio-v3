@@ -26,8 +26,6 @@ export function BlogLayout({
 }) {
 	let router = useRouter();
 
-	console.log(meta);
-
 	if (isRssFeed) {
 		return children;
 	}

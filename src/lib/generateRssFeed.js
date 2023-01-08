@@ -9,8 +9,7 @@ export async function generateRssFeed(feedData) {
         <title>{title}</title>
         <link href={url} />
         <description>{description}</description>
-        <author>{author}</author>
-        <pubDate>{publishedAt}</pubDate>
+        <a href={url}>Read more</a>
       </item>
     );
   }
