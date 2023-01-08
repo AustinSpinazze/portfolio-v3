@@ -17,8 +17,7 @@ export async function generateRssFeed(feedData) {
   // Generate the RSS feed
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
   const author = {
-    name: "Austin Spinazze",
-    email: "austin.spinazze@austinspinazze.dev",
+    name: "Austin Spinazze"
   };
 
   const feed = new Feed({
@@ -48,8 +47,8 @@ export async function generateRssFeed(feedData) {
       link: url,
       description: post.description,
       content: html,
-      author: [{ name: post.author, email: author.email }],
-      contributor: [{ name: post.author, email: author.email }],
+      author,
+      contributor: [{ name: post.author }],
       date: new Date(post.publishedAt),
     });
   });
