@@ -3,13 +3,13 @@ import { writeFile, mkdir } from "fs/promises";
 import ReactDOMServer from "react-dom/server";
 
 export async function generateRssFeed(feedData) {
-  function RssItem({ title, url, description, author, publishedAt }) {
+  function RssItem({ title, url, description }) {
     return (
       <item>
         <title>{title}</title>
         <link href={url} />
         <description>{description}</description>
-        <a href={url}>Read more</a>
+        <a href={url}>&nbsp;-&nbsp;Read more</a>
       </item>
     );
   }
