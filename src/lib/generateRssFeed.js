@@ -21,7 +21,7 @@ export async function generateRssFeed(feedData) {
   };
 
   const feed = new Feed({
-    title: author.name,
+    title: `${author.name}'s Blog`,
     description: "All of my long-form thoughts on programming, product development, personal growth, and more, collected in chronological order.",
     author,
     id: siteUrl,
