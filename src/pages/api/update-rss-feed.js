@@ -24,9 +24,9 @@ export default async function handler(req, res) {
 		const feedData = await fetchFeedData();
 		const { status, message } = await generateRssFeed(feedData);
 		// If the webhook signature is valid and but error occurs throw
-		if (status !== "success") {
-			throw message;
-		}
+		// if (status !== "success") {
+		// 	throw message;
+		// }
 		// If no error respond success 201
 		res.status(201).json({
 			message: message,
