@@ -78,8 +78,7 @@ export async function generateRssFeed(feedData) {
 		return { status, message };
 	} catch (e) {
 		status = "failed";
-		message = "Feed failed to update.";
 
-		return { status, message };
+		return { status, e };
 	}
 }
