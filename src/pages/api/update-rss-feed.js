@@ -5,32 +5,28 @@ import { isValidSignature, SIGNATURE_HEADER_NAME } from "@sanity/webhook";
 const secret = process.env.SANITY_WEBHOOK_SECRET;
 
 export default async function handler(req, res) {
-	try {
-		// Verify request method
-		if (req.method !== "POST") {
-			res.status(405).send({ message: "Only POST requests allowed" });
-			return;
-		}
-		// Read the signature from the headers
-		const signature = req.headers[SIGNATURE_HEADER_NAME];
-		// Read the body into a string
-		const body = await readBody(req);
-		// Validate signature
-		if (!isValidSignature(body, signature, secret)) {
-			res.status(401).json({ success: false, message: "Invalid signature" });
-			return;
-		}
-		// Update Feed
-		const feedData = await fetchFeedData();
-		const { status, message } = await generateRssFeed(feedData);
+	// Verify request method
+	if (req.method !== "POST") {
+		res.status(405).send({ message: "Only POST requests allowed" });
+		return;
+	}
+	// Read the signature from the headers
+	const signature = req.headers[SIGNATURE_HEADER_NAME];
+	// Read the body into a string
+	const body = await readBody(req);
+	// Validate signature
+	if (!isValidSignature(body, signature, secret)) {
+		res.status(401).json({ success: false, message: "Invalid signature" });
+		return;
+	}
 
-		if (status === "success") {
-			res.status(201).json({
-				message: message,
-			});
-		} else {
-			throw message;
-		}
+	try {
+		const feedData = await fetchFeedData();
+		const { message } = await generateRssFeed(feedData);
+
+		res.status(201).json({
+			message: message,
+		});
 	} catch (e) {
 		res.status(500).json({ message: e });
 	}
