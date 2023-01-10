@@ -19,8 +19,8 @@ import image5 from "@/images/photos/image-5.png";
 import { formatDate } from "@/lib/formatDate";
 import client from "@/lib/client";
 import { LINKS } from "@/lib/constants";
-import { fetchFeedData } from "@/lib/fetchRssFeedData";
-import { generateRssFeed } from "@/lib/generateRssFeed";
+import { useEffect } from "react";
+import { useState } from "react";
 
 function MailIcon(props) {
 	return (
@@ -214,6 +214,7 @@ function Photos() {
 							alt=""
 							sizes="(min-width: 640px) 18rem, 11rem"
 							className="absolute inset-0 h-full w-full object-cover"
+							priority
 						/>
 					</div>
 				))}
@@ -288,31 +289,26 @@ export default function Home({ positions, posts }) {
 	);
 }
 
-export async function getStaticProps() {
-	if (process.env.NODE_ENV === "production") {
-		const feedData = await fetchFeedData();
-		await generateRssFeed(feedData);
-	}
-
+export async function getServerSideProps() {
 	const data = await client.fetch(`*[_type == "position"] | order(index asc) {
-		index,
-  	company,
-  	title,
-		responsibilities,
-  	companyLogo,
-  	"companyLogoUrl": companyLogo.asset->url,
-  	companyWebsite,
-  	start,
-  	end
-	} + *[_type == "post"] | order(publishedAt asc) [0...4] {
-    title,
-    publishedAt,
-    slug,
-    summary,
-		author,
-		tags,
-	}
-	`);
+			index,
+			company,
+			title,
+			responsibilities,
+			companyLogo,
+			"companyLogoUrl": companyLogo.asset->url,
+			companyWebsite,
+			start,
+			end
+		} + *[_type == "post"] | order(publishedAt asc) [0...4] {
+			title,
+			publishedAt,
+			slug,
+			summary,
+			author,
+			tags,
+		}
+`);
 
 	const positions = data.filter((doc) => doc.hasOwnProperty("company"));
 	const posts = data.filter((doc) => doc.hasOwnProperty("author"));

@@ -64,11 +64,11 @@ export async function generateRssFeed(feedData) {
 			});
 		});
 
-		await mkdir("/rss", { recursive: true });
+		await mkdir("./public/rss", { recursive: true });
 		await Promise.all([
-			writeFile("/rss/feed.xml", feed.rss2(), "utf8"),
-			writeFile("/rss/feed.json", feed.json1(), "utf8"),
-			writeFile("/rss/feed.atom", feed.atom1(), "utf8"),
+			writeFile("./public/rss/feed.xml", feed.rss2(), "utf8"),
+			writeFile("./public/rss/feed.json", feed.json1(), "utf8"),
+			writeFile("./public/rss/feed.atom", feed.atom1(), "utf8"),
 		]);
 
 		return { status: "success", message: "Successfully updated feed." };
