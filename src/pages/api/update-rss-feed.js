@@ -28,7 +28,7 @@ export default async function handler(req, res) {
 			message: message,
 		});
 	} catch (e) {
-		res.status(500).json({ message: e });
+		res.status(500).json({ message: `${e}: Error on te server.` });
 	}
 }
 
