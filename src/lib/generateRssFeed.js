@@ -73,6 +73,6 @@ export async function generateRssFeed(feedData) {
 
 		return { status: "success", message: "Successfully updated feed." };
 	} catch (e) {
-		return { status: "error", message: error.message };
+		throw new Error(`${e}: Error in generateRssFeed.js`);
 	}
 }
