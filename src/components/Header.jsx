@@ -9,6 +9,7 @@ import avatarImage from "@/images/avatar.png";
 import { Fragment, useEffect, useRef } from "react";
 
 import style from "../styles/switch.module.css";
+import { useState } from "react";
 
 function CloseIcon(props) {
 	return (
@@ -177,7 +178,7 @@ function DesktopNavigation(props) {
 	);
 }
 
-function ModeToggle() {
+function ModeToggle({ darkMode, updateDarkModeState }) {
 	function disableTransitionsTemporarily() {
 		document.documentElement.classList.add("[&_*]:!transition-none");
 		window.setTimeout(() => {
@@ -194,8 +195,10 @@ function ModeToggle() {
 
 		if (isDarkMode === isSystemDarkMode) {
 			delete window.localStorage.isDarkMode;
+			updateDarkModeState(true);
 		} else {
 			window.localStorage.isDarkMode = isDarkMode;
+			updateDarkModeState(false);
 		}
 	}
 
@@ -204,21 +207,24 @@ function ModeToggle() {
 			<span
 				className={clsx(
 					`${style.switch}`,
-					"pointer-events-auto relative mx-auto",
+					"pointer-events-auto mx-auto relative",
 				)}
 			>
 				<input
 					type="checkbox"
 					aria-label="Toggle dark mode"
 					id="dark-mode-switch"
-					onClick={toggleMode}
+					onChange={toggleMode}
+					checked={darkMode}
 				/>
 				<label
 					htmlFor="dark-mode-switch"
 					className="bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur after:bg-zinc-300 dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10"
 				/>
-				<SunIcon className="absolute top-[3px] left-[32px] block h-6 w-6 fill-zinc-100 stroke-zinc-500 transition group-hover:fill-zinc-200 group-hover:stroke-zinc-700 dark:hidden  [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:stroke-teal-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-teal-600" />
-				<MoonIcon className="absolute top-[2px] right-[32px] ml-6 hidden h-6 w-6 fill-zinc-700 stroke-zinc-500 transition dark:block [@media(prefers-color-scheme:dark)]:group-hover:stroke-zinc-400 [@media_not_(prefers-color-scheme:dark)]:fill-teal-400/10 [@media_not_(prefers-color-scheme:dark)]:stroke-teal-500" />
+				<div className="transition-all duration-500">
+					<SunIcon className="absolute block bottom-[3px] left-[33px] h-6 w-6 fill-zinc-100 stroke-zinc-500 transition group-hover:fill-zinc-200 group-hover:stroke-zinc-700 dark:hidden [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:stroke-teal-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-teal-600" />
+					<MoonIcon className="absolute hidden dark:transition duration-400 ml-6 bottom-[3px] right-[33px] h-6 w-6 fill-zinc-700 stroke-zinc-500 transition dark:block [@media(prefers-color-scheme:dark)]:group-hover:stroke-zinc-400 [@media_not_(prefers-color-scheme:dark)]:fill-teal-400/10 [@media_not_(prefers-color-scheme:dark)]:stroke-teal-500" />
+				</div>
 			</span>
 		</>
 	);
@@ -264,11 +270,23 @@ function Avatar({ large = false, className, ...props }) {
 }
 
 export function Header() {
+	const [darkMode, setDarkMode] = useState();
+
 	let isHomePage = useRouter().pathname === "/";
 
 	let headerRef = useRef();
 	let avatarRef = useRef();
 	let isInitial = useRef(true);
+
+	useEffect(() => {
+		const prefersDark = window.matchMedia(
+			"(prefers-color-scheme: dark)",
+		).matches;
+
+		if (prefersDark) {
+			setDarkMode(true);
+		}
+	}, []);
 
 	useEffect(() => {
 		let downDelay = avatarRef.current?.offsetTop ?? 0;
@@ -366,6 +384,10 @@ export function Header() {
 		};
 	}, [isHomePage]);
 
+	function updateDarkModeState(state) {
+		setDarkMode(state);
+	}
+
 	return (
 		<>
 			<header
@@ -429,7 +451,10 @@ export function Header() {
 								<DesktopNavigation className="pointer-events-auto hidden md:block" />
 							</div>
 							<div className="hidden items-center justify-end md:flex md:flex-1">
-								<ModeToggle />
+								<ModeToggle
+									darkMode={darkMode}
+									updateDarkModeState={updateDarkModeState}
+								/>
 							</div>
 						</div>
 					</Container>
