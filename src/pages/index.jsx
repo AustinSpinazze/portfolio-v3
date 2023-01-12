@@ -16,6 +16,8 @@ import {
   XMLIcon,
   BriefcaseIcon,
   ArrowDownIcon,
+  CloseIcon,
+  CheckIcon,
 } from '@/components';
 import { Container } from '../components/layout/Container';
 import image1 from '@/images/photos/image-1.png';
@@ -26,6 +28,9 @@ import image5 from '@/images/photos/image-5.png';
 import { formatDate } from '@/lib/formatDate';
 import client from '@/lib/client';
 import { LINKS } from '@/lib/constants';
+import useCopyToClipboard from '../hooks/useCopyToClipboard';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 function BlogPost({ post }) {
   return (
@@ -77,7 +82,7 @@ function Newsletter() {
   );
 }
 
-function RSSFeeds() {
+function RSSFeeds({ copy }) {
   return (
     <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
@@ -85,25 +90,68 @@ function RSSFeeds() {
         <span className="ml-3">RSS Feed</span>
       </h2>
       <ul className="mx-auto mt-6 flex w-full justify-between px-8">
-        <li className="flex cursor-pointer flex-col items-center">
+        <li
+          className="flex cursor-pointer flex-col items-center"
+          onClick={() => copy(`${document.URL}rss/feed.atom`)}
+        >
           <AtomIcon className="h-6 w-6 flex-none" />
           <span className="mt-2 text-sm text-zinc-800 dark:text-zinc-400">
             Atom
           </span>
         </li>
-        <li className="flex cursor-pointer flex-col items-center">
+        <li
+          className="flex cursor-pointer flex-col items-center"
+          onClick={() => copy(`${document.URL}rss/feed.json`)}
+        >
           <JSONIcon className="h-6 w-6 flex-none" />
           <span className="mt-2 text-sm text-zinc-800 dark:text-zinc-400">
             JSON
           </span>
         </li>
-        <li className="flex cursor-pointer flex-col items-center">
+        <li
+          className="flex cursor-pointer flex-col items-center"
+          onClick={() => copy(`${document.URL}rss/feed.xml`)}
+        >
           <XMLIcon className="h-6 w-6 flex-none" />
           <span className="mt-2 text-sm text-zinc-800 dark:text-zinc-400">
-            Atom
+            XML
           </span>
         </li>
       </ul>
+    </div>
+  );
+}
+
+function Banner({ bannerState, setBannerState }) {
+  return (
+    <div
+      className={`fixed inset-x-0 bottom-0 ${
+        !bannerState && 'hidden'
+      } pb-2 sm:pb-5`}
+    >
+      <div className="mx-auto w-full max-w-2xl px-2 sm:px-6 lg:px-8">
+        <div className="rounded-lg bg-green-600 p-2 shadow-lg sm:p-3">
+          <div className="flex flex-wrap items-center justify-between">
+            <div className="flex w-0 flex-1 items-center">
+              <CheckIcon className="h-6 w-6 fill-white" aria-hidden="true" />
+              <p className="ml-3 truncate font-medium text-white">
+                Copied RSS feed url 👍 Now paste the url into your favorite
+                reader.
+              </p>
+            </div>
+            <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
+              <button
+                type="button"
+                className="-mr-1 flex p-2"
+                onClick={() => setBannerState(false)}
+              >
+                <span className="sr-only">Dismiss</span>
+                <CloseIcon className="h-6 w-6 text-white" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -197,6 +245,16 @@ function Photos() {
 }
 
 export default function Home({ positions, posts }) {
+  const [value, copy] = useCopyToClipboard();
+  const [bannerState, setBannerState] = useState(false);
+
+  useEffect(() => {
+    if (value != null) setBannerState(true);
+    setTimeout(() => {
+      setBannerState(false);
+    }, 3000);
+  }, [value]);
+
   return (
     <>
       <Head>
@@ -254,11 +312,12 @@ export default function Home({ positions, posts }) {
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
             <Newsletter />
-            <RSSFeeds />
+            <RSSFeeds copy={copy} />
             <Resume positions={positions} />
           </div>
         </div>
       </Container>
+      <Banner bannerState={bannerState} setBannerState={setBannerState} />
     </>
   );
 }

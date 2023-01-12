@@ -22,6 +22,11 @@ export { default as JSONIcon } from './Icons/JSONIcon';
 export { default as XMLIcon } from './Icons/XMLIcon';
 export { default as BriefcaseIcon } from './Icons/BriefcaseIcon';
 export { default as ArrowDownIcon } from './Icons/ArrowDownIcon';
+export { default as CloseIcon } from './Icons/CloseIcon';
+export { default as ChevronDownIcon } from './Icons/ChevronDownIcon';
+export { default as SunIcon } from './Icons/SunIcon';
+export { default as MoonIcon } from './Icons/MoonIcon';
+export { default as CheckIcon } from './Icons/CheckIcon';
 
 
 
