@@ -124,8 +124,8 @@ function RSSFeeds({ copy }) {
 
 function Banner({ setBannerState }) {
   return (
-    <div className="fixed inset-x-0 bottom-4 z-50 animate-fade-in-up pb-2 sm:pb-5">
-      <div className="mx-auto w-4/5 px-2 sm:px-6 md:w-full md:max-w-2xl lg:px-8">
+    <div className="fixed inset-x-0 bottom-6 z-50 animate-fade-in-up pb-2 sm:pb-5">
+      <div className="mx-auto w-11/12 px-2 sm:px-6 md:w-full md:max-w-2xl lg:px-8">
         <div className="rounded-lg bg-green-600 p-2 shadow-lg sm:p-3">
           <div className="flex flex-wrap items-center justify-between">
             <div className="flex w-0 flex-1 items-center">
