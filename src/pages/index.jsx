@@ -122,21 +122,20 @@ function RSSFeeds({ copy }) {
   );
 }
 
-function Banner({ bannerState, setBannerState }) {
+function Banner({ setBannerState }) {
   return (
-    <div
-      className={`fixed inset-x-0 bottom-0 ${
-        !bannerState && 'hidden'
-      } pb-2 sm:pb-5`}
-    >
-      <div className="mx-auto w-full max-w-2xl px-2 sm:px-6 lg:px-8">
+    <div className="fixed inset-x-0 bottom-0 animate-fade-in-up pb-2 sm:pb-5">
+      <div className="mx-auto w-full max-w-lg px-2 sm:px-6 md:max-w-2xl lg:px-8">
         <div className="rounded-lg bg-green-600 p-2 shadow-lg sm:p-3">
           <div className="flex flex-wrap items-center justify-between">
             <div className="flex w-0 flex-1 items-center">
               <CheckIcon className="h-6 w-6 fill-white" aria-hidden="true" />
               <p className="ml-3 truncate font-medium text-white">
-                Copied RSS feed url 👍 Now paste the url into your favorite
-                reader.
+                <span className="md:hidden">Copied RSS feed url 👍</span>
+                <span className="hidden md:inline">
+                  Copied RSS feed url 👍 Now paste the url into your favorite
+                  reader.
+                </span>
               </p>
             </div>
             <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-2">
@@ -317,7 +316,7 @@ export default function Home({ positions, posts }) {
           </div>
         </div>
       </Container>
-      <Banner bannerState={bannerState} setBannerState={setBannerState} />
+      {bannerState && <Banner setBannerState={setBannerState} />}
     </>
   );
 }
