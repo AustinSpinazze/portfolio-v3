@@ -1,3 +1,5 @@
+import { isValidEmail } from '@/lib/isValidEmail';
+
 export default async function handler(req, res) {
   try {
     if (req.method !== 'PUT') {
@@ -6,6 +8,12 @@ export default async function handler(req, res) {
     }
 
     let { email } = JSON.parse(req.body);
+
+    if (!isValidEmail) {
+      res
+        .status(400)
+        .send({ message: 'Please provide a valid email address.' });
+    }
 
     const response = await fetch(
       'https://api.sendgrid.com/v3/marketing/contacts',

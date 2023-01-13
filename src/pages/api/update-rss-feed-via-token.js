@@ -4,7 +4,7 @@
 
 // const JWT_SECRET = process.env.JWT_SECRET;
 
-// export default async function authenticatedRoute(req, res) {
+// export default async function handler(req, res) {
 // 	try {
 // 		// Verify request method
 // 		if (req.method !== "POST") {

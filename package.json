@@ -19,6 +19,8 @@
     "@sanity/image-url": "^1.0.1",
     "@sanity/webhook": "^2.0.0",
     "@tailwindcss/typography": "^0.5.4",
+    "@upstash/ratelimit": "^0.1.5",
+    "@upstash/redis": "^1.19.1",
     "autoprefixer": "^10.4.12",
     "clsx": "^1.2.1",
     "fast-glob": "^3.2.11",

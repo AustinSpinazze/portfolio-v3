@@ -8,8 +8,6 @@ export function fetchData(url, options, cache = {}) {
     // Do nothing if the url is not given
     if (!url) return;
 
-    console.log('Made it here');
-
     fetch(url, options)
       .then((response) => {
         if (!response.ok) {

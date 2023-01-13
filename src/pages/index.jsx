@@ -63,7 +63,7 @@ function Newsletter() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!isValidEmail(email)) {
-      setError('Please enter a valid email address.');
+      setError('Please provide a valid email address.');
     } else {
       try {
         const { error } = await fetchData('/api/create-contact', {

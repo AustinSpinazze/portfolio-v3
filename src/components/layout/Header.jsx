@@ -140,8 +140,6 @@ function ModeToggle({ darkMode, updateDarkModeState }) {
       window.localStorage.isDarkMode = isDarkMode;
       updateDarkModeState(false);
     }
-
-    console.log('isDarkMode', window.localStorage.isDarkMode);
   }
 
   return (
