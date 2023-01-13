@@ -71,6 +71,6 @@ export default async function handler(req, res) {
   } catch (error) {
     res
       .status(error.response ? error.response.status : 500)
-      .json({ message: 'There was a problem with the server.' });
+      .json({ message: error.message });
   }
 }
