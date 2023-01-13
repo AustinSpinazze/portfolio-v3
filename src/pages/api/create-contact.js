@@ -47,9 +47,6 @@ export default async function handler(req, res) {
       return;
     }
 
-    console.log('Right before Fetch');
-    console.log(process.env.SENDGRID_TOKEN);
-
     const response = await fetch(
       'https://api.sendgrid.com/v3/marketing/contacts',
       {
@@ -67,8 +64,6 @@ export default async function handler(req, res) {
         }),
       }
     );
-
-    console.log('After fetch', response);
 
     if (!response.ok) throw new Error(response.statusText);
 
