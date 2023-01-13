@@ -67,7 +67,7 @@ export default async function handler(req, res) {
       }
     );
 
-    console.log('After fetch');
+    console.log('After fetch', response.body);
 
     if (!response.ok) throw new Error(response.statusText);
 
