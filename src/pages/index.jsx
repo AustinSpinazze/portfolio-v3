@@ -66,7 +66,6 @@ function Newsletter() {
       setError('Please enter a valid email address.');
     } else {
       try {
-        setError('');
         const { error } = await fetchData('/api/create-contact', {
           method: 'PUT',
           body: JSON.stringify({
@@ -74,6 +73,7 @@ function Newsletter() {
           }),
         });
         if (error) throw error;
+        setError('');
         router.push('/thank-you');
       } catch (error) {
         setError(error.message);
