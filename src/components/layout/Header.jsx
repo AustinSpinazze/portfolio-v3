@@ -161,6 +161,7 @@ function ModeToggle({ darkMode, updateDarkModeState }) {
           aria-label="Toggle dark mode"
           id="dark-mode-switch"
           onClick={(e) => toggleMode(e)}
+          checked
         />
         <label
           htmlFor="dark-mode-switch"
