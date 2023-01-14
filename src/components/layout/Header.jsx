@@ -221,9 +221,12 @@ export default function Header() {
       '(prefers-color-scheme: dark)'
     ).matches;
 
+    const darkModeSwitch = document.getElementById('dark-mode-switch');
+
     let isDarkModeToken = window.localStorage.isDarkMode;
 
     if (prefersDark && isDarkModeToken === undefined) {
+      darkModeSwitch.setAttribute('checked', true);
       setDarkMode(true);
     }
   }, []);
