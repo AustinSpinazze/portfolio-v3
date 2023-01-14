@@ -126,18 +126,20 @@ function ModeToggle({ darkMode, updateDarkModeState }) {
     }, 0);
   }
 
-  function toggleMode() {
+  function toggleMode(event) {
     disableTransitionsTemporarily();
 
-    let darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    let isSystemDarkMode = darkModeMediaQuery.matches;
-    let isDarkMode = document.documentElement.classList.toggle('dark');
+    // let darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    // let isSystemDarkMode = darkModeMediaQuery.matches;
+    // let isDarkMode = document.documentElement.classList.toggle('dark');
 
-    if (isDarkMode === isSystemDarkMode) {
+    document.documentElement.classList.toggle('dark');
+
+    if (event.target.value) {
       delete window.localStorage.isDarkMode;
       updateDarkModeState(true);
     } else {
-      window.localStorage.isDarkMode = isDarkMode;
+      window.localStorage.isDarkMode = false;
       updateDarkModeState(false);
     }
   }
@@ -154,7 +156,7 @@ function ModeToggle({ darkMode, updateDarkModeState }) {
           type="checkbox"
           aria-label="Toggle dark mode"
           id="dark-mode-switch"
-          onChange={toggleMode}
+          onChange={(e) => toggleMode(e)}
           checked={darkMode}
         />
         <label
@@ -220,14 +222,11 @@ export default function Header() {
     const prefersDark = window.matchMedia(
       '(prefers-color-scheme: dark)'
     ).matches;
+    const isDark = window.localStorage.isDarkMode;
 
-    const darkModeSwitch = document.getElementById('dark-mode-switch');
-
-    let isDarkModeToken = window.localStorage.isDarkMode;
-
-    if (prefersDark && isDarkModeToken === undefined) {
-      darkModeSwitch.setAttribute('checked', true);
+    if (prefersDark && isDark === undefined) {
       setDarkMode(true);
+      console.log('useEffect Ran');
     }
   }, []);
 
