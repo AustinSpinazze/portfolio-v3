@@ -118,7 +118,7 @@ function DesktopNavigation(props) {
   );
 }
 
-function ModeToggle({ darkMode, updateDarkModeState }) {
+function ModeToggle() {
   function disableTransitionsTemporarily() {
     document.documentElement.classList.add('[&_*]:!transition-none');
     window.setTimeout(() => {
@@ -151,8 +151,6 @@ function ModeToggle({ darkMode, updateDarkModeState }) {
           aria-label="Toggle dark mode"
           id="dark-mode-switch"
           onChange={(e) => toggleMode(e)}
-          checked={darkMode}
-          className="peer"
         />
         {/* Next thing to try would be to use state to update class in label */}
         <label
@@ -375,10 +373,7 @@ export default function Header() {
                 <DesktopNavigation className="pointer-events-auto hidden md:block" />
               </div>
               <div className="hidden items-center justify-end md:flex md:flex-1">
-                <ModeToggle
-                  darkMode={darkMode}
-                  updateDarkModeState={updateDarkModeState}
-                />
+                <ModeToggle />
               </div>
             </div>
           </Container>
