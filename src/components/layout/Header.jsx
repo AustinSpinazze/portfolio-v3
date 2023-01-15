@@ -162,9 +162,12 @@ function ModeToggle({ darkMode, updateDarkModeState }) {
           checked={darkMode}
           className="peer"
         />
+        {/* Next thing to try would be to use state to update class in label */}
         <label
           htmlFor="dark-mode-switch"
-          className="bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur after:bg-zinc-300 peer-checked:after:translate-x-[30px] dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10"
+          className={`bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur after:bg-zinc-300 ${
+            darkMode && `peer-checked:after:translate-x-[30px]`
+          } dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10`}
         />
         <SunIcon className="absolute bottom-[3px] left-[33px] block h-6 w-6 fill-zinc-100 stroke-zinc-500  group-hover:fill-zinc-200 group-hover:stroke-zinc-700 dark:hidden [@media(prefers-color-scheme:dark)]:fill-teal-50 [@media(prefers-color-scheme:dark)]:stroke-teal-500 [@media(prefers-color-scheme:dark)]:group-hover:fill-teal-50 [@media(prefers-color-scheme:dark)]:group-hover:stroke-teal-600" />
         <MoonIcon className="absolute bottom-[3px] right-[33px] ml-6 hidden h-6 w-6 fill-zinc-700 stroke-zinc-500 dark:block [@media(prefers-color-scheme:dark)]:group-hover:stroke-zinc-400 [@media_not_(prefers-color-scheme:dark)]:fill-teal-400/10 [@media_not_(prefers-color-scheme:dark)]:stroke-teal-500" />
