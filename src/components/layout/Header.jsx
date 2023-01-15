@@ -129,20 +129,12 @@ function ModeToggle({ darkMode, updateDarkModeState }) {
   function toggleMode(event) {
     disableTransitionsTemporarily();
 
-    // let darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    // let isSystemDarkMode = darkModeMediaQuery.matches;
-    // let isDarkMode = document.documentElement.classList.toggle('dark');
-    console.log(event.target.checked);
-    console.log(window.localStorage.isDarkMode);
-
     document.documentElement.classList.toggle('dark');
 
     if (event.target.checked) {
       delete window.localStorage.isDarkMode;
-      updateDarkModeState(true);
     } else {
       window.localStorage.isDarkMode = false;
-      updateDarkModeState(false);
     }
   }
 
@@ -214,25 +206,11 @@ function Avatar({ large = false, className, ...props }) {
 }
 
 export default function Header() {
-  const [darkMode, setDarkMode] = useState(false);
-
   let isHomePage = useRouter().pathname === '/';
 
   let headerRef = useRef();
   let avatarRef = useRef();
   let isInitial = useRef(true);
-
-  useEffect(() => {
-    const prefersDark = window.matchMedia(
-      '(prefers-color-scheme: dark)'
-    ).matches;
-    const isDark = window.localStorage.isDarkMode;
-
-    if (prefersDark && isDark === undefined) {
-      setDarkMode(true);
-      console.log('useEffect Ran');
-    }
-  }, []);
 
   useEffect(() => {
     let downDelay = avatarRef.current?.offsetTop ?? 0;
