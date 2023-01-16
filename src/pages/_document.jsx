@@ -1,4 +1,4 @@
-import { Head, Html, Main, NextScript } from 'next/document'
+import { Head, Html, Main, NextScript } from 'next/document';
 
 const modeScript = `
   let darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -10,6 +10,9 @@ const modeScript = `
   function updateMode() {
     let isSystemDarkMode = darkModeMediaQuery.matches
     let isDarkMode = window.localStorage.isDarkMode === 'true' || (!('isDarkMode' in window.localStorage) && isSystemDarkMode)
+
+    console.log(isSystemDarkMode)
+    console.log(isDarkMode)
 
     if (isDarkMode) {
       document.documentElement.classList.add('dark')
@@ -33,7 +36,7 @@ const modeScript = `
     disableTransitionsTemporarily()
     updateMode()
   }
-`
+`;
 
 export default function Document() {
   return (
@@ -56,5 +59,5 @@ export default function Document() {
         <NextScript />
       </body>
     </Html>
-  )
+  );
 }
