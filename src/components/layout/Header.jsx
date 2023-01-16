@@ -129,8 +129,10 @@ function ModeToggle() {
 
     document.documentElement.classList.toggle('dark');
 
+    console.log(event.target.checked);
+
     if (event.target.checked) {
-      delete window.localStorage.isDarkMode;
+      window.localStorage.removeItem('isDarkMode');
     } else {
       window.localStorage.setItem('isDarkMode', false);
     }
