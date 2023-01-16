@@ -187,7 +187,6 @@ function Banner({ setBannerState }) {
 }
 
 function Resume({ positions }) {
-  console.log(positions);
   const [modalPosition, setModalPosition] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -207,7 +206,7 @@ function Resume({ positions }) {
         <span className="ml-3">Work</span>
       </h2>
       <ol className="mt-6 space-y-4">
-        {/* {positions.map((position) => (
+        {positions.map((position) => (
           <li
             key={position.index}
             className="flex cursor-pointer gap-4"
@@ -242,7 +241,7 @@ function Resume({ positions }) {
               </dd>
             </dl>
           </li>
-        ))} */}
+        ))}
       </ol>
       <Modal
         isModalOpen={isModalOpen}
