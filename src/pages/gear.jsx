@@ -28,10 +28,19 @@ export default function Gear({ gear }) {
   return (
     <>
       <Head>
-        <title>Gear - Gear</title>
+        <title>Gear - Austin Spinazze</title>
         <meta
           name="description"
           content="Software I use, gadgets I love, and other things I recommend."
+        />
+        <meta property="og:title" content="Gear - Austin Spinazze" />
+        <meta
+          property="og:description"
+          content="Software I use, gadgets I love, and other things I recommend."
+        />
+        <meta
+          property="og:image"
+          content="https://cdn.sanity.io/images/gy6mtene/production/1d748a753a74c99a76ea484cdab9f980611f856b-1920x2083.png"
         />
       </Head>
       <SimpleLayout

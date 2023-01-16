@@ -24,6 +24,15 @@ export default function Projects({ projects }) {
           name="description"
           content="Some things I have built over the years."
         />
+        <meta property="og:title" content="Projects - Austin Spinazze" />
+        <meta
+          property="og:description"
+          content="Some things I have built over the years."
+        />
+        <meta
+          property="og:image"
+          content="https://cdn.sanity.io/images/gy6mtene/production/1d748a753a74c99a76ea484cdab9f980611f856b-1920x2083.png"
+        />
       </Head>
       <SimpleLayout
         title="Some things I have built over the years."

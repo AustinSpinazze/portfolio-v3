@@ -28,7 +28,6 @@ import image2 from '@/images/photos/image-2.png';
 import image3 from '@/images/photos/image-3.png';
 import image4 from '@/images/photos/image-4.png';
 import image5 from '@/images/photos/image-5.png';
-import portfolioCapture from '@/images/portfolio-capture.png';
 import { formatDate } from '@/lib/formatDate';
 import client from '@/lib/client';
 import { LINKS } from '@/lib/constants';
@@ -327,7 +326,10 @@ export default function Home({ positions, posts }) {
           property="og:description"
           content={`I'm Austin, a Software Engineer and Consultant specializing in building exceptional digital experiences based in Lafayette, Louisiana. Currently, I'm focused on building accessible, human-centered products at ${positions[0].company}.`}
         />
-        <meta property="og:image" content={portfolioCapture} />
+        <meta
+          property="og:image"
+          content="https://cdn.sanity.io/images/gy6mtene/production/1d748a753a74c99a76ea484cdab9f980611f856b-1920x2083.png"
+        />
       </Head>
       <Container className="mt-9">
         <div className="max-w-2xl">
