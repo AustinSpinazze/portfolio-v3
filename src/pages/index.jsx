@@ -187,6 +187,7 @@ function Banner({ setBannerState }) {
 }
 
 function Resume({ positions }) {
+  console.log(positions);
   const [modalPosition, setModalPosition] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
