@@ -70,10 +70,13 @@ export default function Modal({ isModalOpen, modalController, position }) {
                       </div>
                     </div>
                     <div>
-                      <ul className="max-h-96 list-disc overflow-y-scroll px-16 text-black dark:text-zinc-300 sm:h-full sm:overflow-hidden">
+                      <ul className="max-h-96 list-disc overflow-y-scroll px-16 sm:h-full sm:overflow-hidden">
                         {position.responsibilities.map(
                           (responsibility, index) => (
-                            <li key={index}>
+                            <li
+                              key={index}
+                              className="text-black dark:text-zinc-300"
+                            >
                               <p className="text-sm text-black dark:text-zinc-300">
                                 {responsibility}
                               </p>
