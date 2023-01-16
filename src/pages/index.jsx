@@ -187,7 +187,7 @@ function Banner({ setBannerState }) {
 }
 
 function Resume({ positions }) {
-  const [modalPosition, setModalPosition] = useState({});
+  const [modalPosition, setModalPosition] = useState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   function modalController() {
@@ -243,11 +243,13 @@ function Resume({ positions }) {
           </li>
         ))}
       </ol>
-      <Modal
-        isModalOpen={isModalOpen}
-        modalController={modalController}
-        position={modalPosition}
-      />
+      {modalPosition && (
+        <Modal
+          isModalOpen={isModalOpen}
+          modalController={modalController}
+          position={modalPosition}
+        />
+      )}
       <Button
         href="/assets/AustinSpinazzeResume.pdf"
         download={true}
