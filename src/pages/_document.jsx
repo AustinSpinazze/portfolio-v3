@@ -11,6 +11,8 @@ const modeScript = `
     let isSystemDarkMode = darkModeMediaQuery.matches
     let isDarkMode = window.localStorage.isDarkMode !== false ? true : false
 
+    console.log(window.localStorage.isDarkMode)
+
     console.log(isSystemDarkMode)
     console.log(isDarkMode)
 
