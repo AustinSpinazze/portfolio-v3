@@ -19,9 +19,11 @@ const modeScript = `
     if (isDarkMode === undefined && isSystemDarkMode) {
       document.documentElement.classList.add('dark')
       window.localStorage.removeItem('isDarkMode')
+      console.log("dark mode")
     } else {
       document.documentElement.classList.remove('dark')
       window.localStorage.setItem('isDarkMode', false)
+      console.log("light mode")
     }
 
     // if (isDarkMode === isSystemDarkMode) {
