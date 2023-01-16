@@ -30,7 +30,7 @@ export default function Modal({ isModalOpen, modalController, position }) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative h-screen transform overflow-hidden rounded-lg bg-zinc-50 px-4 pt-5 pb-4 text-left shadow-xl transition-all dark:bg-zinc-800 sm:my-8 sm:h-full sm:w-full sm:max-w-xl sm:p-6">
+              <Dialog.Panel className="relative h-80 transform overflow-hidden rounded-lg bg-zinc-50 px-4 pt-5 pb-4 text-left shadow-xl transition-all dark:bg-zinc-800 sm:my-8 sm:h-full sm:w-full sm:max-w-xl sm:p-6">
                 <div className="flex w-full justify-end">
                   <button
                     type="button"
