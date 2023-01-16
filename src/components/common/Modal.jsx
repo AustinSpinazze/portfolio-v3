@@ -30,7 +30,7 @@ export default function Modal({ isModalOpen, modalController, position }) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative h-80 transform overflow-y-scroll rounded-lg bg-zinc-50 px-4 pt-5 pb-4 text-left shadow-xl transition-all dark:bg-zinc-800 sm:my-8 sm:h-full sm:w-full sm:max-w-xl sm:p-6">
+              <Dialog.Panel className="relative h-80 transform rounded-lg bg-zinc-50 px-4 pt-5 pb-4 text-left shadow-xl transition-all dark:bg-zinc-800 sm:my-8 sm:h-full sm:w-full sm:max-w-xl sm:p-6">
                 <div className="flex w-full justify-end">
                   <button
                     type="button"
@@ -70,7 +70,7 @@ export default function Modal({ isModalOpen, modalController, position }) {
                       </div>
                     </div>
                     <div>
-                      <ul className="list-disc px-16 text-black dark:text-zinc-300">
+                      <ul className="list-disc overflow-y-scroll px-16 text-black dark:text-zinc-300">
                         {position.responsibilities.map(
                           (responsibility, index) => (
                             <li key={index}>
