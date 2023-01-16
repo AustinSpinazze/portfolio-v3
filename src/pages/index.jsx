@@ -20,6 +20,7 @@ import {
   ArrowDownIcon,
   CloseIcon,
   CheckIcon,
+  Modal,
 } from '@/components';
 import { Container } from '../components/layout/Container';
 import image1 from '@/images/photos/image-1.png';
@@ -154,7 +155,7 @@ function RSSFeeds({ copy }) {
 
 function Banner({ setBannerState }) {
   return (
-    <div className="fixed inset-x-0 bottom-6 z-50 animate-fade-in-up pb-2 sm:pb-5">
+    <div className="fixed inset-x-0 bottom-6 z-40 animate-fade-in-up pb-2 sm:pb-5">
       <div className="mx-auto w-11/12 px-2 sm:px-6 md:w-full md:max-w-2xl lg:px-8">
         <div className="rounded-lg bg-green-600 p-2 shadow-lg sm:p-3">
           <div className="flex flex-wrap items-center justify-between">
@@ -186,6 +187,18 @@ function Banner({ setBannerState }) {
 }
 
 function Resume({ positions }) {
+  const [modalPosition, setModalPosition] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  function modalController() {
+    setIsModalOpen(!isModalOpen);
+  }
+
+  function updateModalContent(position) {
+    setModalPosition(position);
+    modalController();
+  }
+
   return (
     <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
@@ -194,7 +207,11 @@ function Resume({ positions }) {
       </h2>
       <ol className="mt-6 space-y-4">
         {positions.map((position) => (
-          <li key={position.index} className="flex gap-4">
+          <li
+            key={position.index}
+            className="flex cursor-pointer gap-4"
+            onClick={() => updateModalContent(position)}
+          >
             <div className="dark:border-zinc-700/50dark:ring-0 relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:bg-white">
               <Image
                 src={position.companyLogoUrl}
@@ -226,6 +243,11 @@ function Resume({ positions }) {
           </li>
         ))}
       </ol>
+      <Modal
+        isModalOpen={isModalOpen}
+        modalController={modalController}
+        position={modalPosition}
+      />
       <Button
         href="/assets/AustinSpinazzeResume.pdf"
         download={true}

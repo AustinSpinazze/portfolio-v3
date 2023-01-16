@@ -9,6 +9,7 @@ export { default as Section } from './layout/Section';
 // Common Components
 export { default as Button } from './common/Button';
 export { default as Card } from './common/Card';
+export { default as Modal } from './common/Modal';
 
 // Icon Components
 export { default as TwitterIcon } from './Icons/TwitterIcon';
@@ -27,6 +28,3 @@ export { default as ChevronDownIcon } from './Icons/ChevronDownIcon';
 export { default as SunIcon } from './Icons/SunIcon';
 export { default as MoonIcon } from './Icons/MoonIcon';
 export { default as CheckIcon } from './Icons/CheckIcon';
-
-
-
