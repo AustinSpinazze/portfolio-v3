@@ -13,6 +13,10 @@
   background: inherit;
 }
 
+::-webkit-scrollbar-thumb {
+  background-color: red;
+}
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;

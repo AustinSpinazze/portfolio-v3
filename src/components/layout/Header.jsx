@@ -127,13 +127,11 @@ function ModeToggle() {
   function toggleMode(event) {
     disableTransitionsTemporarily();
 
-    document.documentElement.classList.toggle('dark');
-
-    console.log(event.target.checked, 'client side');
-
     if (event.target.checked) {
+      document.documentElement.classList.add('dark');
       window.localStorage.removeItem('isDarkMode');
     } else {
+      document.documentElement.classList.remove('dark');
       window.localStorage.setItem('isDarkMode', false);
     }
   }
