@@ -9,22 +9,22 @@ const modeScript = `
 
   function updateMode() {
     let isSystemDarkMode = darkModeMediaQuery.matches
-    let isDarkMode = window.localStorage.isDarkMode !== false ? true : false
+    let isDarkMode = window.localStorage.isDarkMode
 
     console.log(window.localStorage.isDarkMode)
 
     console.log(isSystemDarkMode)
     console.log(isDarkMode)
 
-    if (isDarkMode) {
+    if (isDarkMode === undefined && isSystemDarkMode) {
       document.documentElement.classList.add('dark')
     } else {
       document.documentElement.classList.remove('dark')
     }
 
-    if (isDarkMode === isSystemDarkMode) {
-      delete window.localStorage.isDarkMode
-    }
+    // if (isDarkMode === isSystemDarkMode) {
+    //   delete window.localStorage.isDarkMode
+    // }
   }
 
   function disableTransitionsTemporarily() {
