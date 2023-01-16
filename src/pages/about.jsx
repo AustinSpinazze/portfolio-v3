@@ -143,6 +143,12 @@ export default function About({ about, technologies, positions }) {
           name="description"
           content="I’m Austin Spinazze. I live in Lafayette Louisiana, where I build things for web."
         />
+        <meta property="og:title" content="About - Austin Spinazze" />
+        <meta
+          property="og:description"
+          content="I’m Austin Spinazze. I live in Lafayette Louisiana, where I build things for web."
+        />
+        <meta property="og:image" content="" />
       </Head>
       <Container className="mt-16 sm:mt-32">
         <div className="grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-y-12">

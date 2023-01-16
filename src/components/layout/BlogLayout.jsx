@@ -30,11 +30,21 @@ export default function BlogLayout({
     return children;
   }
 
+  console.log(meta);
+
   return (
     <>
       <Head>
-        <title>{`${meta.title} - Austin Spinazze`}</title>
-        <meta name="description" content={meta.description} />
+        <title>{`${meta.title} - ${meta.author}`}</title>
+        <meta name="description" content={meta.summary} />
+        <meta property="og:title" content={meta.ogTitle} />
+        <meta property="og:description" content={meta.ogDescription} />
+        <meta property="og:image" content={meta.ogImageUrl} />
+        <meta name="robots" content="index, follow" />
+        <link
+          rel="canonical"
+          href={`${process.env.NEXT_PUBLIC_SITE_URL}/posts/${meta.slug}`}
+        />
       </Head>
       <Container className="mt-16 lg:mt-32">
         <div className="xl:relative">

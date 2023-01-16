@@ -28,6 +28,7 @@ import image2 from '@/images/photos/image-2.png';
 import image3 from '@/images/photos/image-3.png';
 import image4 from '@/images/photos/image-4.png';
 import image5 from '@/images/photos/image-5.png';
+import portfolioCapture from '@/images/portfolio-capture.png';
 import { formatDate } from '@/lib/formatDate';
 import client from '@/lib/client';
 import { LINKS } from '@/lib/constants';
@@ -318,6 +319,15 @@ export default function Home({ positions, posts }) {
           name="description"
           content={`I'm Austin, a Software Engineer and Consultant specializing in building exceptional digital experiences based in Lafayette, Louisiana. Currently, I'm focused on building accessible, human-centered products at ${positions[0].company}.`}
         />
+        <meta
+          property="og:title"
+          content="Austin Spinazze - Software Engineer, Consultant, and Freelancer"
+        />
+        <meta
+          property="og:description"
+          content={`I'm Austin, a Software Engineer and Consultant specializing in building exceptional digital experiences based in Lafayette, Louisiana. Currently, I'm focused on building accessible, human-centered products at ${positions[0].company}.`}
+        />
+        <meta property="og:image" content={portfolioCapture} />
       </Head>
       <Container className="mt-9">
         <div className="max-w-2xl">
