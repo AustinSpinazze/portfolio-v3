@@ -129,7 +129,7 @@ function ModeToggle() {
 
     document.documentElement.classList.toggle('dark');
 
-    console.log(event.target.checked);
+    console.log(event.target.checked, 'client side');
 
     if (event.target.checked) {
       window.localStorage.removeItem('isDarkMode');
@@ -152,7 +152,6 @@ function ModeToggle() {
           id="dark-mode-switch"
           onChange={(e) => toggleMode(e)}
         />
-        {/* Next thing to try would be to use state to update class in label */}
         <label
           htmlFor="dark-mode-switch"
           className="bg-white/90 px-3 text-sm font-medium text-zinc-800 shadow-lg shadow-zinc-800/5 ring-1 ring-zinc-900/5 backdrop-blur after:bg-zinc-300 dark:bg-zinc-800/90 dark:text-zinc-200 dark:ring-white/10 after:dark:translate-x-[30px]"
