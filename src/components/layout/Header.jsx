@@ -3,14 +3,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Popover, Transition } from '@headlessui/react';
 import clsx from 'clsx';
+import { Fragment, useEffect, useRef } from 'react';
 
 import { Container } from '@/components/layout/Container';
 import { CloseIcon, ChevronDownIcon, SunIcon, MoonIcon } from '@/components';
 import avatarImage from '@/images/avatar.png';
-import { Fragment, useEffect, useRef } from 'react';
-
 import style from '../../styles/switch.module.css';
-import { useState } from 'react';
 
 function MobileNavItem({ href, children }) {
   return (
