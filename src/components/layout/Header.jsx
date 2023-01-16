@@ -132,7 +132,7 @@ function ModeToggle() {
     if (event.target.checked) {
       delete window.localStorage.isDarkMode;
     } else {
-      window.localStorage.isDarkMode = false;
+      window.localStorage.setItem('isDarkMode', false);
     }
   }
 
