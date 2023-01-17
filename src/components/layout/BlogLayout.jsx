@@ -30,8 +30,6 @@ export default function BlogLayout({
     return children;
   }
 
-  console.log(meta);
-
   return (
     <>
       <Head>

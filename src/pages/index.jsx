@@ -285,7 +285,7 @@ function Photos() {
           >
             <Image
               src={image}
-              alt=""
+              alt="Images of Austin in various places."
               sizes="(min-width: 640px) 18rem, 11rem"
               className="absolute inset-0 h-full w-full object-cover"
               priority
