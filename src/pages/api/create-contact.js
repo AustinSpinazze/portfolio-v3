@@ -1,6 +1,12 @@
 import { isValidEmail } from '@/lib/isValidEmail';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
+const mailchimp = require('@mailchimp/mailchimp_marketing');
+
+mailchimp.setConfig({
+  apiKey: process.env.MAILCHIMP_API_KEY,
+  server: 'us21',
+});
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -21,8 +27,8 @@ function parseIp(req) {
 
 export default async function handler(req, res) {
   try {
-    if (req.method !== 'PUT') {
-      res.status(405).send({ message: 'Only PUT requests allowed.' });
+    if (req.method !== 'POST') {
+      res.status(405).send({ message: 'Only POST requests allowed.' });
       return;
     }
 
@@ -47,30 +53,15 @@ export default async function handler(req, res) {
       return;
     }
 
-    const response = await fetch(
-      'https://api.sendgrid.com/v3/marketing/contacts',
-      {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${process.env.SENDGRID_TOKEN}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          contacts: [
-            {
-              email: email,
-            },
-          ],
-        }),
-      }
-    );
-
-    if (!response.ok) throw new Error(response.statusText);
+    const response = await mailchimp.lists.addListMember('9775124585', {
+      email_address: email,
+      status: 'subscribed',
+    });
 
     res.status(201).json({ message: 'Contact successfully updated.' });
   } catch (error) {
     res
       .status(error.response ? error.response.status : 500)
-      .json({ message: error.message });
+      .json({ message: error });
   }
 }

@@ -68,7 +68,7 @@ function Newsletter() {
     } else {
       try {
         const { error } = await fetchData('/api/create-contact', {
-          method: 'PUT',
+          method: 'POST',
           body: JSON.stringify({
             email,
           }),
