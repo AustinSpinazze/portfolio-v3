@@ -1,19 +1,14 @@
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 import rehypePrism from '@mapbox/rehype-prism';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 
 import client from '@/lib/client';
 import { BlogLayout } from '@/components';
 
-const components = { ReactMarkdown };
-const data = { remarkPlugin: remarkGfm };
-
 export default function Post({ data, content }) {
   return (
     <BlogLayout meta={data}>
-      <MDXRemote {...content} components={components} scope={data} />
+      <MDXRemote {...content} />
     </BlogLayout>
   );
 }
