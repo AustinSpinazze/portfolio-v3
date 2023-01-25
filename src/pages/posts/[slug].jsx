@@ -3,12 +3,12 @@ import { MDXRemote } from 'next-mdx-remote';
 import rehypePrism from '@mapbox/rehype-prism';
 
 import client from '@/lib/client';
-import { BlogLayout } from '@/components';
+import { BlogLayout, Table } from '@/components';
 
 export default function Post({ data, content }) {
   return (
     <BlogLayout meta={data}>
-      <MDXRemote {...content} />
+      <MDXRemote {...content} components={{ Table }} />
     </BlogLayout>
   );
 }
