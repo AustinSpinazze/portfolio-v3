@@ -1,14 +1,15 @@
-import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 import rehypePrism from '@mapbox/rehype-prism';
+import remarkGfm from 'remark-gfm';
+import { compile } from '@mdx-js/mdx';
 
 import client from '@/lib/client';
-import { BlogLayout, Table } from '@/components';
+import { BlogLayout } from '@/components';
 
 export default function Post({ data, content }) {
   return (
     <BlogLayout meta={data}>
-      <MDXRemote {...content} components={{ Table }} />
+      <MDXRemote {...content} />
     </BlogLayout>
   );
 }
@@ -47,15 +48,20 @@ export const getStaticProps = async ({ params }) => {
     }
   `);
 
-  const mdxSource = await serialize(post.content, {
-    mdxOptions: {
-      rehypePlugins: [rehypePrism],
-    },
+  const mdxSource = await compile(post.content, {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [rehypePrism],
   });
+
+  console.log('🚀', mdxSource.value);
+
+  // const mdx = JSON.parse(JSON.stringify(mdxSource));
+  // console.log(mdx);
+
   return {
     props: {
       data: post,
-      content: mdxSource,
+      content: mdxSource.value,
     },
   };
 };
