@@ -1,6 +1,8 @@
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 import rehypePrism from '@mapbox/rehype-prism';
+import ReactDom from 'react-dom';
+import remarkGfm from 'remark-gfm';
 
 import client from '@/lib/client';
 import { BlogLayout } from '@/components';
