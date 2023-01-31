@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Head from 'next/head';
 import clsx from 'clsx';
 
-import client from '@/lib/client';
+import client from '@/lib/sanityClient';
 
 import {
   TwitterIcon,

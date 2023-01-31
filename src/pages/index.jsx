@@ -29,11 +29,12 @@ import image3 from '@/images/photos/image-3.png';
 import image4 from '@/images/photos/image-4.png';
 import image5 from '@/images/photos/image-5.png';
 import { formatDate } from '@/lib/formatDate';
-import client from '@/lib/client';
+import client from '@/lib/sanityClient';
 import { LINKS } from '@/lib/constants';
 import useCopyToClipboard from '@/hooks/useCopyToClipboard';
 import { isValidEmail } from '@/lib/isValidEmail';
 import { fetchData } from '@/lib/fecthData';
+import useAnalytics from '@/hooks/useAnalytics';
 
 function BlogPost({ post }) {
   return (
@@ -300,6 +301,7 @@ function Photos() {
 export default function Home({ positions, posts }) {
   const [value, copy] = useCopyToClipboard();
   const [bannerState, setBannerState] = useState(false);
+  const [trackEvent] = useAnalytics();
 
   useEffect(() => {
     if (value != null) setBannerState(true);
@@ -307,6 +309,12 @@ export default function Home({ positions, posts }) {
       setBannerState(false);
     }, 3000);
   }, [value]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      trackEvent({ page: 'home' });
+    }, 4000);
+  }, []);
 
   return (
     <>

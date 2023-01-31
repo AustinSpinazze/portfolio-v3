@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Head from 'next/head';
 
 import { SimpleLayout, Card } from '@/components';
-import client from '@/lib/client';
+import client from '@/lib/sanityClient';
 
 function LinkIcon(props) {
   return (

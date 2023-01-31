@@ -3,11 +3,10 @@ import rehypePrism from '@mapbox/rehype-prism';
 import remarkGfm from 'remark-gfm';
 import { serialize } from 'next-mdx-remote/serialize';
 
-import client from '@/lib/client';
+import client from '@/lib/sanityClient';
 import { BlogLayout } from '@/components';
 
 export default function Post({ data, content }) {
-  console.log(content);
   return (
     <BlogLayout meta={data}>
       <MDXRemote {...content} />
@@ -55,8 +54,6 @@ export const getStaticProps = async ({ params }) => {
       rehypePlugins: [rehypePrism],
     },
   });
-
-  console.log(mdxSource);
 
   return {
     props: {

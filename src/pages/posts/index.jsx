@@ -2,7 +2,7 @@ import Head from 'next/head';
 
 import { Card, SimpleLayout } from '@/components';
 import { formatDate } from '@/lib/formatDate';
-import client from '@/lib/client';
+import client from '@/lib/sanityClient';
 
 function BlogPost({ post }) {
   return (

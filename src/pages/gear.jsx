@@ -1,7 +1,7 @@
 import Head from 'next/head';
 
 import { Card, Section, SimpleLayout } from '@/components';
-import client from '../lib/client';
+import client from '../lib/sanityClient';
 
 function ToolsSection({ children, ...props }) {
   return (

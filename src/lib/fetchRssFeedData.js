@@ -1,9 +1,9 @@
-import client from "./client";
+import client from './sanityClient';
 
 export async function fetchFeedData() {
-	try {
-		// Fetch all post from Sanity for RSS Feed
-		const response = await client.fetch(`
+  try {
+    // Fetch all post from Sanity for RSS Feed
+    const response = await client.fetch(`
   		*[_type == "post"]{
       	title,
      		publishedAt,
@@ -17,9 +17,9 @@ export async function fetchFeedData() {
       	ogTitle
     	}`);
 
-		return response;
-	} catch (e) {
-		console.log(e);
-		throw new Error("Error fetching feed data.");
-	}
+    return response;
+  } catch (e) {
+    console.log(e);
+    throw new Error('Error fetching feed data.');
+  }
 }
