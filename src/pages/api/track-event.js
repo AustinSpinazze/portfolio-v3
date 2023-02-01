@@ -10,7 +10,7 @@ const ipinfo = new IPinfoWrapper(process.env.IP_INFO_TOKEN, cache);
 export default async function handler(req, res) {
   let ip = req.headers['x-real-ip'] || req.headers['x-forwarded-for'];
 
-  ipinfo.lookupIp(`${ip}`).then((response) => {
+  await ipinfo.lookupIp(`${ip}`).then((response) => {
     console.log(response);
   });
 
