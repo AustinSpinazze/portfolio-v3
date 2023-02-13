@@ -29,6 +29,7 @@ export { default as ChevronDownIcon } from './Icons/ChevronDownIcon';
 export { default as SunIcon } from './Icons/SunIcon';
 export { default as MoonIcon } from './Icons/MoonIcon';
 export { default as CheckIcon } from './Icons/CheckIcon';
+export { default as ChevronRightIcon } from './Icons/ChevronRightIcon';
 
 // Util Components
 export { default as ProtectedRoute } from './utils/ProtectedRoute';

@@ -46,7 +46,7 @@ export default async function handler(req, res) {
 
     let { email } = JSON.parse(req.body);
 
-    if (!isValidEmail) {
+    if (!isValidEmail(email)) {
       res
         .status(400)
         .send({ message: 'Please provide a valid email address.' });
