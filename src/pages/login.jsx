@@ -2,34 +2,32 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Button } from '@/components';
-import { useAuth } from '@/context/AuthContext';
+import supabase from '@/lib/supabaseClient';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
-  const { login } = useAuth();
+  const [errorState, setErrorState] = useState(false);
   const router = useRouter();
 
   async function handleSubmit(event) {
     event.preventDefault();
-    try {
-      await login(email, password);
-      setError(null);
-      router.push('/dashboard');
-    } catch (error) {
-      switch (error.code) {
-        case 'auth/user-not-found':
-          setError('There was a problem with your email or password.');
-          break;
-        case 'auth/wrong-password':
-          setError('There was a problem with your email or password.');
-          break;
-        default:
-          setError('There was a problem logging in.');
-          break;
-      }
+    console.log(email, password);
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+
+    if (error) {
+      console.log(error);
+      setErrorState('There was a problem with the username or password');
+      return;
     }
+
+    setErrorState(null);
+
+    router.push('/dashboard');
   }
 
   return (
@@ -75,9 +73,9 @@ export default function Login() {
                 />
               </div>
             </div>
-            {error && (
+            {errorState && (
               <div className="flex w-full justify-center text-red-500">
-                <span>{error}</span>
+                <span>{errorState}</span>
               </div>
             )}
             <div className="flex w-full justify-center">

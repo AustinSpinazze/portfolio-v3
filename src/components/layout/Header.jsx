@@ -9,6 +9,7 @@ import { Container } from '@/components/layout/Container';
 import { CloseIcon, ChevronDownIcon, SunIcon, MoonIcon } from '@/components';
 import avatarImage from '@/images/avatar.png';
 import style from '../../styles/switch.module.css';
+import { useState } from 'react';
 
 function MobileNavItem({ href, children }) {
   return (
@@ -116,7 +117,7 @@ function DesktopNavigation(props) {
   );
 }
 
-function ModeToggle() {
+function ModeToggle({ toggleDarkMode, darkMode }) {
   function disableTransitionsTemporarily() {
     document.documentElement.classList.add('[&_*]:!transition-none');
     window.setTimeout(() => {
@@ -127,12 +128,18 @@ function ModeToggle() {
   function toggleMode(event) {
     disableTransitionsTemporarily();
 
+    console.log(event.target.checked);
+
     if (event.target.checked) {
       document.documentElement.classList.add('dark');
       window.localStorage.removeItem('isDarkMode');
+      toggleDarkMode(true);
+      console.log('Dark');
     } else {
       document.documentElement.classList.remove('dark');
       window.localStorage.setItem('isDarkMode', false);
+      toggleDarkMode(false);
+      console.log('light');
     }
   }
 
@@ -149,6 +156,7 @@ function ModeToggle() {
           aria-label="Toggle dark mode"
           id="dark-mode-switch"
           onChange={(e) => toggleMode(e)}
+          checked={darkMode}
         />
         <label
           htmlFor="dark-mode-switch"
@@ -202,6 +210,11 @@ function Avatar({ large = false, className, ...props }) {
 
 export default function Header() {
   let isHomePage = useRouter().pathname === '/';
+  const [darkMode, setDarkMode] = useState(false);
+
+  function toggleDarkMode(isDark) {
+    setDarkMode(isDark);
+  }
 
   let headerRef = useRef();
   let avatarRef = useRef();
@@ -303,9 +316,19 @@ export default function Header() {
     };
   }, [isHomePage]);
 
-  function updateDarkModeState(state) {
-    setDarkMode(state);
-  }
+  useEffect(() => {
+    const isDark = window.localStorage.getItem('isDarkMode');
+    console.log(isDark);
+
+    if (
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches &&
+      isDark !== 'false'
+    ) {
+      console.log('Should be dark');
+      toggleDarkMode(true);
+    }
+  }, []);
 
   return (
     <>
@@ -370,7 +393,10 @@ export default function Header() {
                 <DesktopNavigation className="pointer-events-auto hidden md:block" />
               </div>
               <div className="hidden items-center justify-end md:flex md:flex-1">
-                <ModeToggle />
+                <ModeToggle
+                  toggleDarkMode={toggleDarkMode}
+                  darkMode={darkMode}
+                />
               </div>
             </div>
           </Container>

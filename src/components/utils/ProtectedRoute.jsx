@@ -1,16 +1,31 @@
-import { useAuth } from '@/context/AuthContext';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+
+import supabase from '@/lib/supabaseClient';
+import { Loader } from '@/components';
 
 const ProtectedRoute = ({ children }) => {
   const router = useRouter();
-  const { user } = useAuth();
+  const [validUser, setValidUser] = useState(false);
 
-  if (!user.uid) {
-    router.push('/login');
-  }
+  useEffect(() => {
+    async function validateUser() {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
 
-  return <div>{user ? children : null}</div>;
+      if (!user?.id) {
+        setValidUser(false);
+        router.push('/login');
+      }
+
+      setValidUser(true);
+    }
+
+    validateUser();
+  }, []);
+
+  return <div>{validUser ? children : <Loader />}</div>;
 };
 
 export default ProtectedRoute;
