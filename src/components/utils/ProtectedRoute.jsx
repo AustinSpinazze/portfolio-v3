@@ -10,6 +10,12 @@ const ProtectedRoute = ({ children }) => {
 
   useEffect(() => {
     async function validateUser() {
+      const accessToken = localStorage.getItem(
+        'sb-osvssfosdzxqahtylumo-auth-token'
+      );
+
+      if (!accessToken) router.push('/login');
+
       const {
         data: { user },
       } = await supabase.auth.getUser();
