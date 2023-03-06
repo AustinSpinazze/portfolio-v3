@@ -53,7 +53,7 @@ export default async function handler(req, res) {
       return;
     }
 
-    const response = await mailchimp.lists.addListMember('9775124585', {
+    await mailchimp.lists.addListMember('9775124585', {
       email_address: email,
       status: 'subscribed',
     });

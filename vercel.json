@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/water-bot?key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImF1c3RpbnNwaW5henplIiwiaWF0IjoxNjc4MDcxOTAxLCJleHAiOjMyNTU5NTE5MDF9.G4wLi9ZPOFt44KrtzNPQwn_PSjw_mjuBGoFBRnbGwME",
+      "schedule": "0 12 * * *"
+    }
+  ]
+}
