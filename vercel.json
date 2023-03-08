@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/water-bot",
-      "schedule": "45 12 * * *"
+      "schedule": "00 17 * * *"
     }
   ]
 }
