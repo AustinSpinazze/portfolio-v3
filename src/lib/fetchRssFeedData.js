@@ -19,7 +19,6 @@ export async function fetchFeedData() {
 
     return response;
   } catch (e) {
-    console.log(e);
     throw new Error('Error fetching feed data.');
   }
 }

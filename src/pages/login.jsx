@@ -20,7 +20,6 @@ export default function Login() {
     });
 
     if (error) {
-      console.log(error);
       setErrorState('There was a problem with the username or password');
       return;
     }

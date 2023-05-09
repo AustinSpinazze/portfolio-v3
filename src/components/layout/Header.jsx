@@ -127,19 +127,14 @@ function ModeToggle({ toggleDarkMode, darkMode }) {
 
   function toggleMode(event) {
     disableTransitionsTemporarily();
-
-    console.log(event.target.checked);
-
     if (event.target.checked) {
       document.documentElement.classList.add('dark');
       window.localStorage.removeItem('isDarkMode');
       toggleDarkMode(true);
-      console.log('Dark');
     } else {
       document.documentElement.classList.remove('dark');
       window.localStorage.setItem('isDarkMode', false);
       toggleDarkMode(false);
-      console.log('light');
     }
   }
 
@@ -318,14 +313,12 @@ export default function Header() {
 
   useEffect(() => {
     const isDark = window.localStorage.getItem('isDarkMode');
-    console.log(isDark);
 
     if (
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches &&
       isDark !== 'false'
     ) {
-      console.log('Should be dark');
       toggleDarkMode(true);
     }
   }, []);
