@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import CloseIcon from '../Icons/CloseIcon';
 
@@ -30,7 +31,7 @@ export default function Modal({ isModalOpen, modalController, position }) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-zinc-50 px-4 pt-5 pb-4 text-left shadow-xl transition-all dark:bg-zinc-800 sm:my-8 sm:h-full sm:w-full sm:max-w-xl sm:p-6">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-zinc-50 px-4 pt-5 pb-6 text-left shadow-xl transition-all dark:bg-zinc-800 sm:my-8 sm:h-full sm:w-full sm:max-w-xl sm:p-6">
                 <div className="flex w-full justify-end">
                   <button
                     type="button"
@@ -51,24 +52,37 @@ export default function Modal({ isModalOpen, modalController, position }) {
                       className="absolute top-4 left-5 -ml-px h-[95%] w-0.5 bg-gray-200"
                       aria-hidden="true"
                     />
-                    <div className="relative flex justify-between">
-                      <div>
-                        <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0">
-                          <Image
-                            src={position.companyLogoUrl}
-                            alt={position.company}
-                            width={40}
-                            height={40}
-                            className="h-7 w-7"
-                          />
-                        </span>
-                      </div>
-                      <div className="min-w-0 space-x-4 pt-1.5">
-                        <p className="whitespace-nowrap3 text-sm text-gray-500">
-                          {position.start} - {position.end}
-                        </p>
+                    <div className="relative flex items-center justify-between align-middle">
+                      <div className="flex items-baseline gap-5">
+                        <a
+                          href={position.companyWebsite}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0">
+                            <Image
+                              src={position.companyLogoUrl}
+                              alt={position.company}
+                              width={40}
+                              height={40}
+                              className="h-7 w-7"
+                            />
+                          </span>
+                        </a>
+                        <a
+                          href={position.companyWebsite}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <h2 className="text-lg font-bold text-black dark:text-zinc-300 md:text-xl">
+                            {position.company} - {position.title}
+                          </h2>
+                        </a>
                       </div>
                     </div>
+                    <p className="whitespace-nowrap3 px-16 pb-3 text-sm text-gray-500">
+                      {position.start} - {position.end}
+                    </p>
                     <div>
                       <ul className="max-h-96 list-disc overflow-y-scroll px-16 sm:h-full sm:overflow-hidden">
                         {position.responsibilities.map(
