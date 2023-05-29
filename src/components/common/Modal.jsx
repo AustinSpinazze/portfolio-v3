@@ -84,7 +84,7 @@ export default function Modal({ isModalOpen, modalController, position }) {
                       {position.start} - {position.end}
                     </p>
                     <div>
-                      <ul className="max-h-96 list-disc overflow-y-scroll px-16 sm:h-full sm:overflow-hidden">
+                      <ul className="max-h-96 list-disc overflow-y-scroll pl-16 pr-0 sm:h-full">
                         {position.responsibilities.map(
                           (responsibility, index) => (
                             <li
