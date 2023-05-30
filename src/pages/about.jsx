@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import Image from 'next/image';
 import Head from 'next/head';
 import clsx from 'clsx';
+import { motion } from 'framer-motion';
 
 import client from '@/lib/sanityClient';
 
@@ -41,7 +43,7 @@ function TechnologyGrid({ array, filter }) {
   return (
     <ul
       role="list"
-      className="grid grid-cols-2 place-items-center gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
+      className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
     >
       {array.map((item) => {
         if (item.type === filter) {
@@ -85,11 +87,16 @@ function TechnologyGrid({ array, filter }) {
 }
 
 function Positions({ positions }) {
+  const [openedPosition, setOpenedPosition] = useState(0);
+
+  const transitionOpen = { duration: 0.5 };
+  const transitionClose = { duration: 0.25 };
+
   return (
     <div className="flow-root">
       <ul role="list" className="-mb-8">
         {positions.map((position, index) => (
-          <li key={position.company}>
+          <li key={position.company} className="relative">
             <div className="relative pb-8">
               {index !== positions.length - 1 ? (
                 <span
@@ -115,16 +122,52 @@ function Positions({ positions }) {
                   </p>
                 </div>
               </div>
-              <div>
+              <motion.div
+                initial={{ maxHeight: '80px' }}
+                animate={{
+                  maxHeight: openedPosition === index ? '1000px' : '80px',
+                }}
+                transition={
+                  openedPosition === index ? transitionOpen : transitionClose
+                }
+                className="overflow-hidden"
+              >
                 <ul className="list-disc px-16">
-                  {position.responsibilities.map((responsibility, index) => (
-                    <li key={index}>
+                  {position.responsibilities.map((responsibility, rIndex) => (
+                    <li key={rIndex}>
                       <p className="text-sm text-black dark:text-zinc-300">
                         {responsibility}
                       </p>
                     </li>
                   ))}
                 </ul>
+              </motion.div>
+              <div className="absolute bottom-0 left-0 right-0 mx-auto flex items-center justify-center">
+                <div className="mr-1 h-[1px] w-1/4 bg-gray-300"></div>
+                <button
+                  className="relative flex h-5 w-5 items-center justify-center rounded-full border border-blue-500 text-blue-500 hover:border-blue-700 hover:text-blue-700"
+                  onClick={() =>
+                    setOpenedPosition(openedPosition !== index ? index : null)
+                  }
+                >
+                  <motion.svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    className="h-3 w-3"
+                    animate={{ rotate: openedPosition === index ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </motion.svg>
+                </button>
+                <div className="ml-1 h-[1px] w-1/4 bg-gray-300"></div>
               </div>
             </div>
           </li>
@@ -173,30 +216,6 @@ export default function About({ about, technologies, positions }) {
               <p>{about[0].text}</p>
               <p>{about[1].text}</p>
               <Positions positions={positions} />
-              <p>{about[2].text}</p>
-              <div>
-                <h3 className="mb-4 text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
-                  Languages
-                </h3>
-                <TechnologyGrid array={technologies} filter={'language'} />
-                <h3 className="my-4 text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
-                  Frameworks/Libraries
-                </h3>
-                <TechnologyGrid array={technologies} filter={'framework'} />
-                <h3 className="my-4 text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
-                  Runtimes
-                </h3>
-                <TechnologyGrid array={technologies} filter={'runtime'} />
-                <h3 className="my-4 text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
-                  Cloud
-                </h3>
-                <TechnologyGrid array={technologies} filter={'cloud'} />
-                <h3 className="my-4 text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
-                  Database
-                </h3>
-                <TechnologyGrid array={technologies} filter={'database'} />
-              </div>
-              <p>{about[3].text}</p>
             </div>
           </div>
           <div className="lg:pl-20">
@@ -231,6 +250,34 @@ export default function About({ about, technologies, positions }) {
             </ul>
           </div>
         </div>
+        <div className="mt-10 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
+          <h2 className="text-lg font-bold tracking-tight">{about[2].text}</h2>
+          <div>
+            <h3 className="mb-4 text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
+              Languages
+            </h3>
+            <TechnologyGrid array={technologies} filter={'language'} />
+            <h3 className="my-4 text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
+              Frameworks/Libraries
+            </h3>
+            <TechnologyGrid array={technologies} filter={'framework'} />
+            <h3 className="my-4 text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
+              Runtimes
+            </h3>
+            <TechnologyGrid array={technologies} filter={'runtime'} />
+            <h3 className="my-4 text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
+              Cloud
+            </h3>
+            <TechnologyGrid array={technologies} filter={'cloud'} />
+            <h3 className="my-4 text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
+              Database
+            </h3>
+            <TechnologyGrid array={technologies} filter={'database'} />
+          </div>
+        </div>
+        <p className="mt-10 text-zinc-600 dark:text-zinc-400 md:mt-20">
+          {about[3].text}
+        </p>
       </Container>
     </>
   );

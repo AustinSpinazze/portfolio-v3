@@ -34,6 +34,7 @@
     "fast-glob": "^3.2.11",
     "feed": "^4.2.2",
     "focus-visible": "^5.2.0",
+    "framer-motion": "^10.12.16",
     "jsonwebtoken": "^9.0.0",
     "next": "13.0.2",
     "next-mdx-remote": "^4.2.1",
