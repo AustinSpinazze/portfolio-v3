@@ -43,12 +43,15 @@ function TechnologyGrid({ array, filter }) {
   return (
     <ul
       role="list"
-      className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
+      className="grid grid-cols-3 gap-x-4 gap-y-10 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
     >
       {array.map((item) => {
         if (item.type === filter) {
           return (
-            <li key={item.name} className="relative flex justify-start">
+            <li
+              key={item.name}
+              className="relative flex justify-center sm:justify-start"
+            >
               <div className="group pointer-events-auto cursor-pointer">
                 <div className="absolute bottom-10 mx-auto mb-4 hidden max-w-[228px] rounded bg-white  px-4 py-4 outline outline-1 outline-zinc-200 group-hover:block dark:bg-zinc-800">
                   <p className="text-sm font-semibold leading-none dark:text-white">
@@ -147,7 +150,7 @@ function Positions({ positions }) {
                 }
                 className="overflow-hidden"
               >
-                <ul className="list-disc px-16">
+                <ul className="list-disc pl-16 pr-0">
                   {position.responsibilities.map((responsibility, rIndex) => (
                     <li key={rIndex}>
                       <p className="text-sm text-black dark:text-zinc-300">
