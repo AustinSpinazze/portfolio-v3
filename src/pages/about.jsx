@@ -107,8 +107,8 @@ function Positions({ positions }) {
                   aria-hidden="true"
                 />
               ) : null}
-              <div className="relative flex items-center justify-between align-middle">
-                <div className="flex items-baseline gap-5">
+              <div className="relative flex flex-col justify-between align-baseline sm:grid sm:grid-flow-col sm:grid-cols-2 sm:items-center sm:justify-end">
+                <div className="flex items-center space-x-4">
                   <a
                     href={position.companyWebsite}
                     target="_blank"
@@ -133,11 +133,11 @@ function Positions({ positions }) {
                       {position.company} - {position.title}
                     </h2>
                   </a>
-                  <div className="min-w-0 space-x-4 pt-1.5">
-                    <p className="whitespace-nowrap3 text-sm text-gray-500">
-                      {position.start} - {position.end}
-                    </p>
-                  </div>
+                </div>
+                <div className="min-w-0 space-x-4 pl-14 pb-4 sm:pt-1.5 sm:pb-0 sm:pl-0 ">
+                  <p className="whitespace-nowrap text-sm text-gray-500">
+                    {position.start} - {position.end}
+                  </p>
                 </div>
               </div>
               <motion.div
