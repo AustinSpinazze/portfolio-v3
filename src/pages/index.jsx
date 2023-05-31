@@ -223,17 +223,13 @@ function Resume({ positions }) {
               />
             </div>
             <dl className="flex flex-auto flex-wrap gap-x-2">
-              <dt className="sr-only">Company</dt>
+              <dt className="sr-only">Company and Role</dt>
               <dd className="w-full flex-none text-sm font-medium text-zinc-900 dark:text-zinc-100">
-                {position.company}
-              </dd>
-              <dt className="sr-only">Role</dt>
-              <dd className="text-xs text-zinc-500 dark:text-zinc-400">
-                {position.title}
+                {position.company} - {position.title}
               </dd>
               <dt className="sr-only">Date</dt>
               <dd
-                className="ml-auto text-xs text-zinc-400 dark:text-zinc-500"
+                className="text-xs text-zinc-400 dark:text-zinc-500"
                 aria-label={`${position.start} - ${position.end}`}
               >
                 <time dateTime={position.startDate}>{position.start}</time>
