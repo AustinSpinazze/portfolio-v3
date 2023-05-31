@@ -163,14 +163,16 @@ function Positions({ positions }) {
               <div className="absolute bottom-0 left-0 right-0 mx-auto flex items-center justify-center">
                 <div
                   className={`mr-1 h-[0.75px] w-1/4 ${
-                    openedPosition === index ? 'bg-teal-500' : 'bg-gray-500'
+                    openedPosition === index
+                      ? 'bg-teal-500'
+                      : 'bg-gray-400 dark:bg-gray-200'
                   }`}
                 ></div>
                 <button
                   className={`relative flex h-5 w-5 items-center justify-center rounded-full border ${
                     openedPosition === index
                       ? 'border-teal-500 text-teal-500'
-                      : 'border-gray-500 text-gray-500'
+                      : 'border-gray-400 text-gray-400  dark:border-gray-200 dark:text-gray-200'
                   }`}
                   onClick={() =>
                     setOpenedPosition(openedPosition !== index ? index : null)
@@ -195,7 +197,9 @@ function Positions({ positions }) {
                 </button>
                 <div
                   className={`ml-1 h-[0.75px] w-1/4 ${
-                    openedPosition === index ? 'bg-teal-500' : 'bg-gray-500'
+                    openedPosition === index
+                      ? 'bg-teal-500'
+                      : 'bg-gray-400 dark:bg-gray-200'
                   }`}
                 ></div>
               </div>
