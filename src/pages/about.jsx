@@ -97,10 +97,10 @@ function Positions({ positions }) {
 
   return (
     <div className="flow-root">
-      <ul role="list" className="-mb-8">
+      <ul role="list" className="-mb-8 space-y-2">
         {positions.map((position, index) => (
           <li key={position.company} className="relative">
-            <div className="relative pb-8">
+            <div className="relative pb-7">
               {index !== positions.length - 1 ? (
                 <span
                   className="absolute top-4 left-5 -ml-px h-full w-0.5 bg-gray-200"
@@ -161,9 +161,17 @@ function Positions({ positions }) {
                 </ul>
               </motion.div>
               <div className="absolute bottom-0 left-0 right-0 mx-auto flex items-center justify-center">
-                <div className="mr-1 h-[1px] w-1/4 bg-gray-500"></div>
+                <div
+                  className={`mr-1 h-[0.75px] w-1/4 ${
+                    openedPosition === index ? 'bg-teal-500' : 'bg-gray-500'
+                  }`}
+                ></div>
                 <button
-                  className="relative flex h-5 w-5 items-center justify-center rounded-full border border-gray-500 text-gray-500 hover:border-teal-500 hover:text-teal-500"
+                  className={`relative flex h-5 w-5 items-center justify-center rounded-full border ${
+                    openedPosition === index
+                      ? 'border-teal-500 text-teal-500'
+                      : 'border-gray-500 text-gray-500'
+                  }`}
                   onClick={() =>
                     setOpenedPosition(openedPosition !== index ? index : null)
                   }
@@ -185,7 +193,11 @@ function Positions({ positions }) {
                     />
                   </motion.svg>
                 </button>
-                <div className="ml-1 h-[0.75px] w-1/4 bg-gray-500"></div>
+                <div
+                  className={`ml-1 h-[0.75px] w-1/4 ${
+                    openedPosition === index ? 'bg-teal-500' : 'bg-gray-500'
+                  }`}
+                ></div>
               </div>
             </div>
           </li>
