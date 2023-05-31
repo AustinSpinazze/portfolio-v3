@@ -48,10 +48,7 @@ function TechnologyGrid({ array, filter }) {
       {array.map((item) => {
         if (item.type === filter) {
           return (
-            <li
-              key={item.name}
-              className="relative flex justify-center sm:justify-start"
-            >
+            <li key={item.name} className="relative flex justify-start">
               <div className="group pointer-events-auto cursor-pointer">
                 <div className="absolute bottom-10 mx-auto mb-4 hidden max-w-[228px] rounded bg-white  px-4 py-4 outline outline-1 outline-zinc-200 group-hover:block dark:bg-zinc-800">
                   <p className="text-sm font-semibold leading-none dark:text-white">
@@ -107,7 +104,7 @@ function Positions({ positions }) {
                   aria-hidden="true"
                 />
               ) : null}
-              <div className="relative flex flex-col justify-between align-baseline sm:grid sm:grid-flow-col sm:grid-cols-2 sm:items-center sm:justify-end">
+              <div className="relative flex flex-col justify-between align-baseline">
                 <div className="flex items-center space-x-4">
                   <a
                     href={position.companyWebsite}
@@ -134,7 +131,7 @@ function Positions({ positions }) {
                     </h2>
                   </a>
                 </div>
-                <div className="min-w-0 space-x-4 pl-14 pb-4 sm:pt-1.5 sm:pb-0 sm:pl-0 ">
+                <div className="min-w-0 space-x-4 pl-14 pb-2">
                   <p className="whitespace-nowrap text-sm text-gray-500">
                     {position.start} - {position.end}
                   </p>
