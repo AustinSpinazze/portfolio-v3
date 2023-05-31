@@ -48,7 +48,10 @@ function TechnologyGrid({ array, filter }) {
       {array.map((item) => {
         if (item.type === filter) {
           return (
-            <li key={item.name} className="relative">
+            <li
+              key={item.name}
+              className="relative flex justify-center sm:justify-start"
+            >
               <div className="group pointer-events-auto cursor-pointer">
                 <div className="absolute bottom-10 mx-auto mb-4 hidden max-w-[228px] rounded bg-white  px-4 py-4 outline outline-1 outline-zinc-200 group-hover:block dark:bg-zinc-800">
                   <p className="text-sm font-semibold leading-none dark:text-white">
@@ -104,22 +107,37 @@ function Positions({ positions }) {
                   aria-hidden="true"
                 />
               ) : null}
-              <div className="relative flex justify-between">
-                <div>
-                  <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0">
-                    <Image
-                      src={position.companyLogoUrl}
-                      alt={position.company}
-                      width={40}
-                      height={40}
-                      className="h-7 w-7"
-                    />
-                  </span>
-                </div>
-                <div className="min-w-0 space-x-4 pt-1.5">
-                  <p className="whitespace-nowrap3 text-sm text-gray-500">
-                    {position.start} - {position.end}
-                  </p>
+              <div className="relative flex items-center justify-between align-middle">
+                <div className="flex items-baseline gap-5">
+                  <a
+                    href={position.companyWebsite}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:ring-0">
+                      <Image
+                        src={position.companyLogoUrl}
+                        alt={position.company}
+                        width={40}
+                        height={40}
+                        className="h-7 w-7"
+                      />
+                    </span>
+                  </a>
+                  <a
+                    href={position.companyWebsite}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <h2 className="text-base font-bold text-black dark:text-zinc-300">
+                      {position.company} - {position.title}
+                    </h2>
+                  </a>
+                  <div className="min-w-0 space-x-4 pt-1.5">
+                    <p className="whitespace-nowrap3 text-sm text-gray-500">
+                      {position.start} - {position.end}
+                    </p>
+                  </div>
                 </div>
               </div>
               <motion.div
@@ -143,9 +161,9 @@ function Positions({ positions }) {
                 </ul>
               </motion.div>
               <div className="absolute bottom-0 left-0 right-0 mx-auto flex items-center justify-center">
-                <div className="mr-1 h-[1px] w-1/4 bg-gray-300"></div>
+                <div className="mr-1 h-[1px] w-1/4 bg-gray-500"></div>
                 <button
-                  className="relative flex h-5 w-5 items-center justify-center rounded-full border border-blue-500 text-blue-500 hover:border-blue-700 hover:text-blue-700"
+                  className="relative flex h-5 w-5 items-center justify-center rounded-full border border-gray-500 text-gray-500 hover:border-teal-500 hover:text-teal-500"
                   onClick={() =>
                     setOpenedPosition(openedPosition !== index ? index : null)
                   }
@@ -167,7 +185,7 @@ function Positions({ positions }) {
                     />
                   </motion.svg>
                 </button>
-                <div className="ml-1 h-[1px] w-1/4 bg-gray-300"></div>
+                <div className="ml-1 h-[0.75px] w-1/4 bg-gray-500"></div>
               </div>
             </div>
           </li>
@@ -207,8 +225,39 @@ export default function About({ about, technologies, positions }) {
                 className="aspect-square rotate-3 rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
               />
             </div>
+            <div className="mt-12">
+              <ul role="list">
+                <SocialLink href={LINKS.TWITTER} icon={TwitterIcon}>
+                  Follow on Twitter
+                </SocialLink>
+                <SocialLink
+                  href={LINKS.INSTAGRAM}
+                  icon={InstagramIcon}
+                  className="mt-4"
+                >
+                  Follow on Instagram
+                </SocialLink>
+                <SocialLink
+                  href={LINKS.GITHUB}
+                  icon={GithubIcon}
+                  className="mt-4"
+                >
+                  Follow on GitHub
+                </SocialLink>
+                <SocialLink
+                  href={LINKS.LINKEDIN}
+                  icon={LinkedInIcon}
+                  className="mt-4"
+                >
+                  Follow on LinkedIn
+                </SocialLink>
+                <SocialLink href={LINKS.EMAIL} icon={MailIcon} className="mt-8">
+                  austin.spinazze@austinspinazze.dev
+                </SocialLink>
+              </ul>
+            </div>
           </div>
-          <div className="lg:order-first lg:row-span-2">
+          <div className=" mb-20 lg:order-first lg:row-span-2">
             <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
               Hi there, I’m Austin.
             </h1>
@@ -218,40 +267,9 @@ export default function About({ about, technologies, positions }) {
               <Positions positions={positions} />
             </div>
           </div>
-          <div className="lg:pl-20">
-            <ul role="list">
-              <SocialLink href={LINKS.TWITTER} icon={TwitterIcon}>
-                Follow on Twitter
-              </SocialLink>
-              <SocialLink
-                href={LINKS.INSTAGRAM}
-                icon={InstagramIcon}
-                className="mt-4"
-              >
-                Follow on Instagram
-              </SocialLink>
-              <SocialLink
-                href={LINKS.GITHUB}
-                icon={GithubIcon}
-                className="mt-4"
-              >
-                Follow on GitHub
-              </SocialLink>
-              <SocialLink
-                href={LINKS.LINKEDIN}
-                icon={LinkedInIcon}
-                className="mt-4"
-              >
-                Follow on LinkedIn
-              </SocialLink>
-              <SocialLink href={LINKS.EMAIL} icon={MailIcon} className="mt-8">
-                austin.spinazze@austinspinazze.dev
-              </SocialLink>
-            </ul>
-          </div>
         </div>
-        <div className="mt-10 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
-          <h2 className="text-lg font-bold tracking-tight">{about[2].text}</h2>
+        <div className="space-y-7 text-base text-zinc-600 dark:text-zinc-400">
+          <p>{about[2].text}</p>
           <div>
             <h3 className="mb-4 text-lg font-bold tracking-tight text-zinc-800 dark:text-zinc-100">
               Languages
