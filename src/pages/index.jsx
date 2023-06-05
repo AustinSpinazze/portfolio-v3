@@ -3,6 +3,9 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
+import useWindowWidth from '@/hooks/useWindowWidth';
 
 import {
   TwitterIcon,
@@ -256,6 +259,8 @@ function Resume({ positions }) {
 }
 
 function Photos({ gallery: data }) {
+  const windowWidth = useWindowWidth();
+
   const rotations = [
     'rotate-2',
     '-rotate-2',
@@ -266,31 +271,58 @@ function Photos({ gallery: data }) {
 
   const photos = data[0].gallery;
 
+  const imageWidth = 72;
+  const imageGap = 8;
+  const totalWidth = (imageWidth + imageGap) * photos.length;
+
+  const carouselVariants = {
+    animate: {
+      x: [-totalWidth / 2, windowWidth],
+      transition: {
+        duration: 6,
+        repeat: Infinity,
+        ease: 'linear',
+      },
+    },
+  };
+
+  const photoItems = photos.map((image, index) => (
+    <div
+      key={image.index}
+      className={clsx(
+        'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
+        rotations[index % rotations.length]
+      )}
+    >
+      <div className="absolute inset-0 flex animate-pulse items-center justify-center bg-zinc-200 dark:bg-zinc-800">
+        <div className="h-full w-full rounded bg-gradient-to-r from-zinc-200 to-zinc-300 dark:from-zinc-700 dark:to-zinc-800" />
+      </div>
+
+      <Image
+        src={image.imageUrl}
+        alt={image.alt}
+        width={500}
+        height={300}
+        className="absolute inset-0 h-full w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+  ));
+
   return (
     <div className="mt-16 sm:mt-20">
-      <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-        {photos.map((image, index) => (
-          <div
-            key={image.index}
-            className={clsx(
-              'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
-              rotations[index % rotations.length]
-            )}
+      <div className="-my-4 flex justify-center gap-8 overflow-hidden py-4 sm:static sm:gap-8">
+        {windowWidth <= 640 ? (
+          <motion.div
+            className="flex gap-8"
+            variants={carouselVariants}
+            animate="animate"
           >
-            <div className="absolute inset-0 flex animate-pulse items-center justify-center bg-zinc-200 dark:bg-zinc-800">
-              <div className="h-full w-full rounded bg-gradient-to-r from-zinc-200 to-zinc-300 dark:from-zinc-700 dark:to-zinc-800" />
-            </div>
-
-            <Image
-              src={image.imageUrl}
-              alt={image.alt}
-              width={500}
-              height={300}
-              className="absolute inset-0 h-full w-full object-cover"
-              loading="lazy"
-            />
-          </div>
-        ))}
+            {photoItems}
+          </motion.div>
+        ) : (
+          <div className="flex gap-8">{photoItems}</div>
+        )}
       </div>
     </div>
   );
