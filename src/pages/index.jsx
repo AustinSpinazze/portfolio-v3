@@ -256,7 +256,7 @@ function Resume({ positions }) {
 }
 
 function Photos({ gallery: data }) {
-  let rotations = [
+  const rotations = [
     'rotate-2',
     '-rotate-2',
     'rotate-2',
@@ -269,26 +269,28 @@ function Photos({ gallery: data }) {
   return (
     <div className="mt-16 sm:mt-20">
       <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-        {photos.map((image, imageIndex) => {
-          return (
-            <div
-              key={image.index}
-              className={clsx(
-                'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
-                rotations[imageIndex % rotations.length]
-              )}
-            >
-              <Image
-                src={image.imageUrl}
-                alt={image.alt}
-                width={500}
-                height={300}
-                sizes="(min-width: 640px) 18rem, 11rem"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
+        {photos.map((image, index) => (
+          <div
+            key={image.index}
+            className={clsx(
+              'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
+              rotations[index % rotations.length]
+            )}
+          >
+            <div className="absolute inset-0 flex animate-pulse items-center justify-center bg-zinc-200 dark:bg-zinc-800">
+              <div className="h-full w-full rounded bg-gradient-to-r from-zinc-200 to-zinc-300 dark:from-zinc-700 dark:to-zinc-800" />
             </div>
-          );
-        })}
+
+            <Image
+              src={image.imageUrl}
+              alt={image.alt}
+              width={500}
+              height={300}
+              className="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+        ))}
       </div>
     </div>
   );
