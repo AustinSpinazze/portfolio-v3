@@ -23,6 +23,7 @@ import {
   CheckIcon,
   Modal,
   Loader,
+  NextImage,
 } from '@/components';
 import { Container } from '../components/layout/Container';
 import { formatDate } from '@/lib/formatDate';
@@ -286,7 +287,7 @@ function Photos({ gallery: data }) {
         rotations[index % rotations.length]
       )}
     >
-      <Image
+      <NextImage
         src={image.imageUrl}
         alt={image.alt}
         width={500}
