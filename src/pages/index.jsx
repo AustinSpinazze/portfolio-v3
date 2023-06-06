@@ -274,16 +274,16 @@ function Photos({ gallery: data }) {
     '-rotate-2',
   ];
 
-  const photos = isClient ? [...data[0].gallery, ...data[0].gallery] : [];
+  const photos = isClient ? data[0].gallery : [];
 
-  const imageWidth = windowWidth <= 640 ? 44 : 72;
+  const imageWidth = windowWidth <= 844 ? 44 : 72;
   const imageGap = 8;
 
   const photoItems = photos.map((image, index) => (
     <div
       key={`${image.index}-${index}`}
       className={clsx(
-        'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
+        'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:rounded-2xl lg:w-72',
         rotations[index % rotations.length]
       )}
     >
@@ -297,7 +297,8 @@ function Photos({ gallery: data }) {
     </div>
   ));
 
-  const doublePhotos = [...photoItems, ...photoItems];
+  const doublePhotos =
+    windowWidth <= 844 ? [...photoItems, ...photoItems] : [...photoItems];
   const totalWidth = (imageWidth + imageGap) * doublePhotos.length;
 
   const carouselVariants = {
@@ -319,7 +320,7 @@ function Photos({ gallery: data }) {
       {isClient ? (
         <div className="mt-16 sm:mt-20">
           <div className="-my-4 flex justify-center gap-8 overflow-hidden py-4 sm:static sm:gap-8">
-            {windowWidth <= 640 ? (
+            {windowWidth <= 844 ? (
               <motion.div
                 className="flex gap-8"
                 variants={carouselVariants}
