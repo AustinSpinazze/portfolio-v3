@@ -275,20 +275,8 @@ function Photos({ gallery: data }) {
 
   const photos = isClient ? [...data[0].gallery, ...data[0].gallery] : [];
 
-  const imageWidth = 72;
+  const imageWidth = windowWidth <= 640 ? 44 : 72;
   const imageGap = 8;
-  const totalWidth = (imageWidth + imageGap) * photos.length;
-
-  const carouselVariants = {
-    animate: {
-      x: [-totalWidth / 2, windowWidth],
-      transition: {
-        duration: 60,
-        repeat: Infinity,
-        ease: 'linear',
-      },
-    },
-  };
 
   const photoItems = photos.map((image, index) => (
     <div
@@ -321,6 +309,23 @@ function Photos({ gallery: data }) {
     </div>
   ));
 
+  const doublePhotos = [...photoItems, ...photoItems];
+  const totalWidth = (imageWidth + imageGap) * doublePhotos.length;
+
+  const carouselVariants = {
+    animate: {
+      x: [0, -totalWidth],
+      transition: {
+        x: {
+          repeat: Infinity,
+          repeatType: 'loop',
+          duration: 60,
+          ease: 'linear',
+        },
+      },
+    },
+  };
+
   return (
     <>
       {isClient ? (
@@ -332,7 +337,7 @@ function Photos({ gallery: data }) {
                 variants={carouselVariants}
                 animate="animate"
               >
-                {photoItems}
+                {doublePhotos}
               </motion.div>
             ) : (
               <div className="flex gap-8">{photoItems}</div>
