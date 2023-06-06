@@ -5,8 +5,6 @@ import clsx from 'clsx';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-import useWindowWidth from '@/hooks/useWindowWidth';
-
 import {
   TwitterIcon,
   InstagramIcon,
@@ -24,6 +22,7 @@ import {
   CloseIcon,
   CheckIcon,
   Modal,
+  Loader,
 } from '@/components';
 import { Container } from '../components/layout/Container';
 import { formatDate } from '@/lib/formatDate';
@@ -32,7 +31,7 @@ import { LINKS } from '@/lib/constants';
 import useCopyToClipboard from '@/hooks/useCopyToClipboard';
 import { isValidEmail } from '@/lib/isValidEmail';
 import { fetchData } from '@/lib/fecthData';
-import useAnalytics from '@/hooks/useAnalytics';
+import useWindowWidth from '@/hooks/useWindowWidth';
 
 function BlogPost({ post }) {
   return (
@@ -260,6 +259,11 @@ function Resume({ positions }) {
 
 function Photos({ gallery: data }) {
   const windowWidth = useWindowWidth();
+  const [isClient, setClient] = useState(false);
+
+  useEffect(() => {
+    setClient(true);
+  }, []);
 
   const rotations = [
     'rotate-2',
@@ -269,7 +273,7 @@ function Photos({ gallery: data }) {
     '-rotate-2',
   ];
 
-  const photos = data[0].gallery;
+  const photos = isClient ? [...data[0].gallery, ...data[0].gallery] : [];
 
   const imageWidth = 72;
   const imageGap = 8;
@@ -279,7 +283,7 @@ function Photos({ gallery: data }) {
     animate: {
       x: [-totalWidth / 2, windowWidth],
       transition: {
-        duration: 6,
+        duration: 60,
         repeat: Infinity,
         ease: 'linear',
       },
@@ -310,28 +314,33 @@ function Photos({ gallery: data }) {
   ));
 
   return (
-    <div className="mt-16 sm:mt-20">
-      <div className="-my-4 flex justify-center gap-8 overflow-hidden py-4 sm:static sm:gap-8">
-        {windowWidth <= 640 ? (
-          <motion.div
-            className="flex gap-8"
-            variants={carouselVariants}
-            animate="animate"
-          >
-            {photoItems}
-          </motion.div>
-        ) : (
-          <div className="flex gap-8">{photoItems}</div>
-        )}
-      </div>
-    </div>
+    <>
+      {isClient ? (
+        <div className="mt-16 sm:mt-20">
+          <div className="-my-4 flex justify-center gap-8 overflow-hidden py-4 sm:static sm:gap-8">
+            {windowWidth <= 640 ? (
+              <motion.div
+                className="flex gap-8"
+                variants={carouselVariants}
+                animate="animate"
+              >
+                {photoItems}
+              </motion.div>
+            ) : (
+              <div className="flex gap-8">{photoItems}</div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <Loader />
+      )}
+    </>
   );
 }
 
 export default function Home({ positions, posts, gallery }) {
   const [value, copy] = useCopyToClipboard();
   const [bannerState, setBannerState] = useState(false);
-  const [trackEvent] = useAnalytics();
 
   useEffect(() => {
     if (value != null) setBannerState(true);
@@ -339,12 +348,6 @@ export default function Home({ positions, posts, gallery }) {
       setBannerState(false);
     }, 3000);
   }, [value]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      trackEvent({ page: 'home' });
-    }, 4000);
-  }, []);
 
   return (
     <>
