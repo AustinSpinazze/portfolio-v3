@@ -308,7 +308,6 @@ function Photos({ gallery: data }) {
         width={500}
         height={300}
         className="absolute inset-0 h-full w-full object-cover"
-        loading="lazy"
       />
     </div>
   ));
