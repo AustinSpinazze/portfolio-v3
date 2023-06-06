@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 import {
   TwitterIcon,
@@ -21,20 +22,16 @@ import {
   CloseIcon,
   CheckIcon,
   Modal,
+  Loader,
 } from '@/components';
 import { Container } from '../components/layout/Container';
-import image1 from '@/images/photos/image-1.png';
-import image2 from '@/images/photos/image-2.png';
-import image3 from '@/images/photos/image-3.png';
-import image4 from '@/images/photos/image-4.png';
-import image5 from '@/images/photos/image-5.png';
 import { formatDate } from '@/lib/formatDate';
 import client from '@/lib/sanityClient';
 import { LINKS } from '@/lib/constants';
 import useCopyToClipboard from '@/hooks/useCopyToClipboard';
 import { isValidEmail } from '@/lib/isValidEmail';
 import { fetchData } from '@/lib/fecthData';
-import useAnalytics from '@/hooks/useAnalytics';
+import useWindowWidth from '@/hooks/useWindowWidth';
 
 function BlogPost({ post }) {
   return (
@@ -260,8 +257,15 @@ function Resume({ positions }) {
   );
 }
 
-function Photos() {
-  let rotations = [
+function Photos({ gallery: data }) {
+  const windowWidth = useWindowWidth();
+  const [isClient, setClient] = useState(false);
+
+  useEffect(() => {
+    setClient(true);
+  }, []);
+
+  const rotations = [
     'rotate-2',
     '-rotate-2',
     'rotate-2',
@@ -269,35 +273,74 @@ function Photos() {
     '-rotate-2',
   ];
 
-  return (
-    <div className="mt-16 sm:mt-20">
-      <div className="-my-4 flex justify-center gap-5 overflow-hidden py-4 sm:gap-8">
-        {[image1, image2, image3, image4, image5].map((image, imageIndex) => (
-          <div
-            key={image.src}
-            className={clsx(
-              'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
-              rotations[imageIndex % rotations.length]
-            )}
-          >
-            <Image
-              src={image}
-              alt="Images of Austin in various places."
-              sizes="(min-width: 640px) 18rem, 11rem"
-              className="absolute inset-0 h-full w-full object-cover"
-              priority
-            />
-          </div>
-        ))}
+  const photos = isClient ? [...data[0].gallery, ...data[0].gallery] : [];
+
+  const imageWidth = 72;
+  const imageGap = 8;
+  const totalWidth = (imageWidth + imageGap) * photos.length;
+
+  const carouselVariants = {
+    animate: {
+      x: [-totalWidth / 2, windowWidth],
+      transition: {
+        duration: 60,
+        repeat: Infinity,
+        ease: 'linear',
+      },
+    },
+  };
+
+  const photoItems = photos.map((image, index) => (
+    <div
+      key={image.index}
+      className={clsx(
+        'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 sm:w-72 sm:rounded-2xl',
+        rotations[index % rotations.length]
+      )}
+    >
+      <div className="absolute inset-0 flex animate-pulse items-center justify-center bg-zinc-200 dark:bg-zinc-800">
+        <div className="h-full w-full rounded bg-gradient-to-r from-zinc-200 to-zinc-300 dark:from-zinc-700 dark:to-zinc-800" />
       </div>
+
+      <Image
+        src={image.imageUrl}
+        alt={image.alt}
+        width={500}
+        height={300}
+        className="absolute inset-0 h-full w-full object-cover"
+        loading="lazy"
+      />
     </div>
+  ));
+
+  return (
+    <>
+      {isClient ? (
+        <div className="mt-16 sm:mt-20">
+          <div className="-my-4 flex justify-center gap-8 overflow-hidden py-4 sm:static sm:gap-8">
+            {windowWidth <= 640 ? (
+              <motion.div
+                className="flex gap-8"
+                variants={carouselVariants}
+                animate="animate"
+              >
+                {photoItems}
+              </motion.div>
+            ) : (
+              <div className="flex gap-8">{photoItems}</div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <Loader />
+      )}
+    </>
   );
 }
 
-export default function Home({ positions, posts }) {
+export default function Home({ positions, posts, gallery }) {
   const [value, copy] = useCopyToClipboard();
   const [bannerState, setBannerState] = useState(false);
-  const [trackEvent] = useAnalytics();
 
   useEffect(() => {
     if (value != null) setBannerState(true);
@@ -305,12 +348,6 @@ export default function Home({ positions, posts }) {
       setBannerState(false);
     }, 3000);
   }, [value]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      trackEvent({ page: 'home' });
-    }, 4000);
-  }, []);
 
   return (
     <>
@@ -371,7 +408,7 @@ export default function Home({ positions, posts }) {
           </div>
         </div>
       </Container>
-      <Photos />
+      <Photos gallery={gallery} />
       <Container className="mt-24 md:mt-28">
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
           <div className="flex flex-col gap-16">
@@ -392,33 +429,45 @@ export default function Home({ positions, posts }) {
 }
 
 export async function getServerSideProps() {
-  const data = await client.fetch(`*[_type == "position"] | order(index asc) {
-			index,
-			company,
-			title,
-			responsibilities,
-			companyLogo,
-			"companyLogoUrl": companyLogo.asset->url,
-			companyWebsite,
-			start,
-			end
-		} + *[_type == "post"] | order(publishedAt asc) [0...4] {
-			title,
-			publishedAt,
-			slug,
-			summary,
-			author,
-			tags,
-		}
+  const data = await client.fetch(`
+  *[_type == "position"] | order(index asc) {
+    index,
+    company,
+    title,
+    responsibilities,
+    companyLogo,
+    "companyLogoUrl": companyLogo.asset->url,
+    companyWebsite,
+    start,
+    end
+  } + 
+  *[_type == "post"] | order(publishedAt asc) [0...4] {
+    title,
+    publishedAt,
+    slug,
+    summary,
+    author,
+    tags,
+  } +
+  *[_type == "galleryDocument" && page == "home"] {
+    gallery[] {
+      alt,
+      index,
+      image,
+      "imageUrl": image.asset->url
+    }
+  }
 `);
 
   const positions = data.filter((doc) => doc.hasOwnProperty('company'));
   const posts = data.filter((doc) => doc.hasOwnProperty('author'));
+  const gallery = data.filter((doc) => doc.hasOwnProperty('gallery'));
 
   return {
     props: {
       positions,
       posts,
+      gallery,
     },
   };
 }
