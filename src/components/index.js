@@ -11,6 +11,7 @@ export { default as Button } from './common/Button';
 export { default as Card } from './common/Card';
 export { default as Modal } from './common/Modal';
 export { default as Loader } from './common/Loader';
+export { default as NextImage } from './common/NextImage';
 
 // Icon Components
 export { default as TwitterIcon } from './Icons/TwitterIcon';

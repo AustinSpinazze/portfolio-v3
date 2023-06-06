@@ -23,6 +23,7 @@ import {
   CheckIcon,
   Modal,
   Loader,
+  NextImage,
 } from '@/components';
 import { Container } from '../components/layout/Container';
 import { formatDate } from '@/lib/formatDate';
@@ -286,25 +287,12 @@ function Photos({ gallery: data }) {
         rotations[index % rotations.length]
       )}
     >
-      <div
-        id={`${image.index}-${index}`}
-        className="absolute inset-0 flex animate-pulse items-center justify-center bg-zinc-200 dark:bg-zinc-800"
-      >
-        <div className="h-full w-full rounded bg-gradient-to-r from-zinc-200 to-zinc-300 dark:from-zinc-700 dark:to-zinc-800" />
-      </div>
-
-      <Image
+      <NextImage
         src={image.imageUrl}
         alt={image.alt}
         width={500}
         height={300}
         className="absolute inset-0 h-full w-full object-cover"
-        onLoadingComplete={() => {
-          const element = document.getElementById(`${image.index}-${index}`);
-          if (element) {
-            element.style.display = 'none';
-          }
-        }}
       />
     </div>
   ));
