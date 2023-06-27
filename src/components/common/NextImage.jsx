@@ -11,7 +11,7 @@ const NextImage = ({ src, alt, width, height, className }) => {
   return (
     <>
       {isLoading && (
-        <div className="flex h-full w-full animate-pulse items-center justify-center rounded bg-gray-300 dark:bg-gray-700 sm:w-96">
+        <div className="flex h-full w-full animate-pulse items-center justify-center rounded bg-gray-300 dark:bg-gray-700">
           <svg
             className="h-12 w-12 text-gray-200"
             xmlns="http://www.w3.org/2000/svg"
