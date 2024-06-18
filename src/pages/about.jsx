@@ -103,7 +103,7 @@ function Positions({ positions }) {
             <div className="relative pb-7">
               {index !== positions.length - 1 ? (
                 <span
-                  className="absolute top-4 left-5 -ml-px h-full w-0.5 bg-gray-200"
+                  className="absolute left-5 top-4 -ml-px h-full w-0.5 bg-gray-200"
                   aria-hidden="true"
                 />
               ) : null}
@@ -134,7 +134,7 @@ function Positions({ positions }) {
                     </h2>
                   </a>
                 </div>
-                <div className="min-w-0 space-x-4 pl-14 pb-2">
+                <div className="min-w-0 space-x-4 pb-2 pl-14">
                   <p className="whitespace-nowrap text-sm text-gray-500">
                     {position.start} - {position.end}
                   </p>
@@ -243,9 +243,6 @@ export default function About({ about, technologies, positions }) {
             </div>
             <div className="mt-12">
               <ul role="list">
-                <SocialLink href={LINKS.TWITTER} icon={TwitterIcon}>
-                  Follow on Twitter
-                </SocialLink>
                 <SocialLink
                   href={LINKS.INSTAGRAM}
                   icon={InstagramIcon}

@@ -355,19 +355,19 @@ export default function Home({ positions, posts, gallery }) {
     <>
       <Head>
         <title>
-          Austin Spinazze - Software Engineer, Consultant, and Freelancer
+          Austin Spinazze - Senior Software Engineer, Consultant, and Freelancer
         </title>
         <meta
           name="description"
-          content={`I'm Austin, a Software Engineer and Consultant specializing in building exceptional digital experiences based in Lafayette, Louisiana. Currently, I'm focused on building accessible, human-centered products at ${positions[0].company}.`}
+          content={`I'm Austin, a Senior Software Engineer and Consultant specializing in building exceptional digital experiences based in Lafayette, Louisiana. Currently, I'm focused on building accessible, human-centered products at ${positions[0].company}.`}
         />
         <meta
           property="og:title"
-          content="Austin Spinazze - Software Engineer, Consultant, and Freelancer"
+          content="Austin Spinazze - Senior Software Engineer, Consultant, and Freelancer"
         />
         <meta
           property="og:description"
-          content={`I'm Austin, a Software Engineer and Consultant specializing in building exceptional digital experiences based in Lafayette, Louisiana. Currently, I'm focused on building accessible, human-centered products at ${positions[0].company}.`}
+          content={`I'm Austin, a Senior Software Engineer and Consultant specializing in building exceptional digital experiences based in Lafayette, Louisiana. Currently, I'm focused on building accessible, human-centered products at ${positions[0].company}.`}
         />
         <meta
           property="og:image"
@@ -377,18 +377,12 @@ export default function Home({ positions, posts, gallery }) {
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-5xl">
-            Software Engineer, Consultant, and Freelancer.
+            Senior Software Engineer, Consultant, and Freelancer.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            {`I'm Austin, a Software Engineer and Consultant specializing in building exceptional digital experiences based in Lafayette, Louisiana. Currently, I'm focused on building accessible, human-centered products at ${positions[0].company}.`}
+            {`I'm Austin, Senior a Software Engineer and Consultant specializing in building exceptional digital experiences based in Lafayette, Louisiana. Currently, I'm focused on building accessible, human-centered products at ${positions[0].company}.`}
           </p>
           <div className="mt-6 flex gap-6">
-            <SocialLink
-              target="_blank"
-              href={LINKS.TWITTER}
-              aria-label="Follow on Twitter"
-              icon={TwitterIcon}
-            />
             <SocialLink
               target="_blank"
               href={LINKS.INSTAGRAM}
